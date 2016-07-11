@@ -12,12 +12,12 @@ def home(request):
 
 def form_data(request):
 	context = {
-		'bikeType' : serialize_selections(BikeOption.objects.all().values()),
-		'wheels' : serialize_selections(WheelOption.objects.all().values()),
-		'brand' : serialize_selections(BrandOption.objects.all().values()),
-		'cosmetic' : serialize_selections(CosmeticOption.objects.all().values()),
-		'frame' : serialize_selections(FrameOption.objects.all().values()),
-		'features' : serialize_selections(FeaturesOption.objects.all().values())
+		'bikeType' : serialize_selections(BikeOption.objects.all()),
+		'wheels' : serialize_selections(WheelOption.objects.all()),
+		'brand' : serialize_selections(BrandOption.objects.all()),
+		'cosmetic' : serialize_selections(CosmeticOption.objects.all()),
+		'frame' : serialize_selections(FrameOption.objects.all()),
+		'features' : serialize_selections(FeaturesOption.objects.all())
 	}
 	return JsonResponse(context)
 
@@ -26,8 +26,16 @@ def serialize_selections(query_set):
 	data = {}
 
 	for obj in query_set:
+		if type(obj) == BikeOption:
+			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor}
+		else:
+			requisites = []
+			for req in obj.requisites.values():
+				requisites.append(req['option'])
+				
 
-		data[obj['option']] = {'status' : False, 'price_factor' : obj['price_factor']}
+			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor, 'requisites':requisites}
+	print data
 
 	return data
 
@@ -45,8 +53,3 @@ def create_category(request):
 	
 	print category 
 	return render(request, 'bike_donations/index.html')
-
-def sample_post(request):
-	print(request.body)
-	if request.data()
-	return 

@@ -7,5 +7,4 @@ urlpatterns = [
 	url(r'^form/$', views.form_data),
     url(r'^create_category/$', views.create_category),
     url(r'^inventory/$', views.get_inv),
-    url(r'^samplePost/$', views.sample_post),
 ]

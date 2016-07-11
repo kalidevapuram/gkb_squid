@@ -58,7 +58,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 						$scope[optObject[opt]] = {};
 
-						var requiredArr = optObject[opt].requisite
+						var requiredArr = optObject[opt].requisitess
 						var mustHave;
 						for (index = 0; index < requiredArr.length; index++){
 							mustHave = requiredArr[index];
