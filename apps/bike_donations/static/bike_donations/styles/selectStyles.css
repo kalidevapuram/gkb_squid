@@ -1,0 +1,11 @@
+*{
+	padding:1em;
+	margin:0;
+	font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+}
+
+#header{
+	border-bottom:.2em solid black;
+}
+
+#
