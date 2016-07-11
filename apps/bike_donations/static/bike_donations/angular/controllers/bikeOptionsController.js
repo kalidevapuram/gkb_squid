@@ -1,5 +1,6 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
+	var test = bikeOptionsFactory.selectionData();
 
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
@@ -51,9 +52,6 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 					$scope[prep] = {};
 					
 					for (var opt in optObject){
-
-						console.log(opt);
-						console.log(optObject[opt])
 
 						$scope[optObject[opt]] = {};
 
@@ -109,9 +107,12 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	};
 
 	$scope.getBike = function(){
+		event.preventDefault();
 		var bike = bikeOptionsFactory.assembleBike();
-		console.log(bike)
-	}
+		bikeOptionsFactory.postBike(bike)
+	};
+
+
 
 
 });
