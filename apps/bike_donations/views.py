@@ -48,5 +48,5 @@ def create_category(request):
 
 def sample_post(request):
 	print(request.body)
-	data = {"hey":"there"}
+	if request.data()
 	return 

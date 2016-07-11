@@ -1,7 +1,10 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, bikeOptionsFactory, scrollService, boolService){
-	$scope.bikeType = {};
-	var test = bikeOptionsFactory.selectionData();
-
+	
+	bikeOptionsFactory.selectionData(function(data){
+		$scope.bikeType = bikeOptionsFactory.bikeType;
+		console.log(data);
+	});
+	
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
 	}, function(newValue, oldValue) {
