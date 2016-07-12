@@ -172,7 +172,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			}
 		};
 
-		factory.assembleBike = function(){
+		factory.assembleBike = function(callback){
 			console.log("Hewwo");
 			var typeArr = ["bikeType", "wheels", "brand", "cosmetic", "frame", "features"];
 			var sType;
@@ -195,9 +195,10 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 					};
 				}
 			}
-			assembled_bike = bikeFinal;
 
-			return bikeFinal;
+			// assembled_bike = bikeFinal;
+
+			callback(bikeFinal);
 		}
 
 		factory.create_category = function(){

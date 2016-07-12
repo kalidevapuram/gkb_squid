@@ -1,5 +1,10 @@
-angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, bikeOptionsFactory, scrollService, boolService){
+angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
+
+	$scope.goBack = function(){
+		$window.location = "/";
+	}
+
 	var test = bikeOptionsFactory.selectionData();
 
 	$scope.$watch(function() {
@@ -114,14 +119,23 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	$scope.getBike = function(){
 
-		event.preventDefault();
-		var bike = bikeOptionsFactory.assembleBike();
-		$scope.bike_info = bike;
-		console.log($scope.bike_info)
-		console.log("bike returned", bike);
-		bikeOptionsFactory.postBike(bike)
-		$location.path('/confirm');
+		// event.preventDefault();
+		bikeOptionsFactory.assembleBike(function(bike){
+			$scope.bike_info = bike;
+			console.log($scope.bike_info)
+			console.log("bike returned", bike);
+			bikeOptionsFactory.postBike(bike)
+		});
+		// $location.path('/confirm');
 	};
+
+	$scope.confirm = function(){
+		console.log("going to confirm");
+		bikeOptionsFactory.assembleBike(function(bike){
+			$scope.assembled_bike=bike;
+		});
+		$scope.checkBike = true;
+	}
 
 
 

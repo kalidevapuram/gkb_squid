@@ -55,7 +55,7 @@ def sample_post(request):
 	bikePrice = parsed_json['price']
 	lightspeed = LightspeedApi()
 	newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
-	return render(request, 'bike_donations/index.html')
+	return JsonResponse(parsed_json)
 
 
 # def getBike(request):

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="{% static 'bike_donations/angular/JsBarcode.all.min.js' %}"></script>
+	<style type="text/css">
+
+		@media screen {
+			body {
+		 		size: 3.0in 2.4in;
+		  		margin: 0in;
+		  		text-align: center;
+
+
+			}
+			#label {
+				height: 100%;
+				width: 100%;
+				text-align: center;
+			}
+			#cost, #info {
+				/*font-size: 100%;*/
+				margin: 0px;
+			}
+
+		}
+
+		@media print {
+			@page{
+				size: 3.0in 2.4in;
+		  		margin: 0in;
+			}
+			/*body {
+		 		size: 3.0in 2.4in;
+		  		margin: 0in;
+
+			}*/
+			button {
+				display: none;
+			}
+			#label {
+				height: 100%;
+				width: 100%;
+				text-align: center;
+			}
+			#cost, #info {
+				/*font-size: 100%;*/
+				margin: 0px;
+			}
+
+		}
+
+
+
+	</style>
+
+	<title></title>
+</head>
+<body>
+	<div id="label">
+		<img id="barcode"
+	       jsbarcode-format="upc"
+	       jsbarcode-value="123456789012"
+	       jsbarcode-height="40"
+	       >
+
+	    </img>
+	    <h1 id="cost">$239.99</h1>
+	    <h1 id="info">Bike Type</br>Bike Model</h1>
+    </div>
+    <button onclick="window.print()">Print Label</button>
+</body>
+<script type="text/javascript">
+	JsBarcode('#barcode').init()
+</script>
+</html>
