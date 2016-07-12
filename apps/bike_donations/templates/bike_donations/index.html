@@ -3,15 +3,25 @@
 
 
 {% load staticfiles %}
+
+
 <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 <script type = "text/javascript" src = "https:ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+
 
 
 <!--<script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>-->
 <script>
-angular.module('bikeSelect', ['ngCookies'])
-	.config(function($interpolateProvider, $httpProvider) {
+angular.module('bikeSelect', ['ngCookies','ngRoute'])
+	.config(function($interpolateProvider, $httpProvider/*, $routeProvider*/) {
+
+		// $routeProvider.when('/confirm', {
+	  //    controller: 'confirmationController',
+	  //    templateUrl: 'static/bike_donations/angular/partials/confirm.html'
+	  //  });
+
 		$interpolateProvider.startSymbol('[[').endSymbol(']]');
 		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -23,12 +33,15 @@ angular.module('bikeSelect', ['ngCookies'])
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/omniOptionsController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/bikeOptionsController.js' %}"></script>
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/confirmationController.js' %}"></script>
 
 
 </head>
 
 
 <body>
+<div class="container">
+
 
 	<div id = "header">
 		<h2>Add To Inventory Demo</h2>
@@ -38,11 +51,14 @@ angular.module('bikeSelect', ['ngCookies'])
 			<button id = 'bike' ng-click = "buttonClicked('bike')">Bike</button>
 			<button id = 'component' ng-click = "buttonClicked('component')">Component</button>
 			<button id = 'other' ng-click = "buttonClicked('other')">Other</button>
+			<button id = 'addTrain' ng-click = "create_category()">Add trains</button>
 		</div>
 	</div>
 
 	<div id = "optionsBox">
 		<div ng-controller = "bikeOptionsController">
+			<form>
+			{% csrf_token %}
 			<div ng-if = "bikeOption && !productOption.status">
 				<div id = 'bike' class = 'selectBox'>
 					<h2>Select a bike</h2>
@@ -101,18 +117,92 @@ angular.module('bikeSelect', ['ngCookies'])
 			    			<input type="checkbox" id="[[key]]" ng-click = "checkbox(key)"/>[[key]]<br>
 			    		</label><br><br>
 			  		</span>
-			  		<form>{% csrf_token %}
-			  			<button ng-click="getBike()">All Done</button>
-			  		</form>
+
+						<form>
+							<button ng-click="confirm()">Confirm</button>
+						</form>
 				</div>
 			</div>
 			<div id = "bottom"></div>
+			<div ng-show="checkBike">
+				<p>
+					Confirmation would go here.
+				</p>
+					<table>
+						<thead>
+							<th>
+								Model
+							</th>
+							<th>
+								Wheel
+							</th>
+							<th>
+								Brand
+							</th>
+							<th>
+								Cosmetics
+							</th>
+							<th>
+								Frame
+							</th>
+							<th>
+								Features
+							</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									[[assembled_bike.bikeType]]
+								</td>
+								<td>
+									[[assembled_bike.wheels]]
+								</td>
+								<td>
+									[[assembled_bike.brand]]
+								</td>
+								<td>
+									[[assembled_bike.cosmetic]]
+								</td>
+								<td>
+									[[assembled_bike.frame]]
+								</td>
+								<td>
+									<p ng-repeat="feature in assembled_bike.features">							[[feature]]
+									</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<form>{% csrf_token %}
+						<button ng-click="getBike()">All Done</button>
+						<button ng-click="goBack()">Go Back</button>
+					</form>
+			</div>
+</div> <!-- end of container -->
+</div>
+</div>
+			<script src="{% static 'bike_donations/angular/JsBarcode.all.min.js' %}"></script>
+			<div id="label" ng-controller="bikeOptionsController">
+				<img id="barcode"
+			       jsbarcode-format="upc"
+			       jsbarcode-value="123456789012"
+			       jsbarcode-height="40"
+			       >
+
+			    </img>
+			    <h1 id="cost">$239.99</h1>
+			    <h1 id="info">Bike Type</br>Bike Model</h1>
+		    </div>
+		    <button onclick="window.print()">Print Label</button>
+				<script type="text/javascript">
+					JsBarcode('#barcode').init()
+				</script>
 		</div>
 
 
-	</div>
 
-</body> 
+</body>
+
+
+
 </html>
-
-

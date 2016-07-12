@@ -3,7 +3,10 @@ from django.http import JsonResponse
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption, WheelOption
 from .models import Bike
 import requests
+import json
 from .api import LightspeedApi
+# from django.views.generic.base import TemplateView
+
 
 
 # Create your views here.
@@ -50,6 +53,26 @@ def create_category(request):
 
 	lightspeed = LightspeedApi()
 	category = lightspeed.create_category()
+<<<<<<< HEAD
 	
 	print category 
 	return render(request, 'bike_donations/index.html')
+=======
+
+	print category
+	return render(request, 'bike_donations/index.html')
+
+def sample_post(request):
+	parsed_json = json.loads(request.body)
+	descriptionString = str(parsed_json['bikeType'] + " " + parsed_json['brand'] + " " + parsed_json['cosmetic'])
+	bikePrice = parsed_json['price']
+	lightspeed = LightspeedApi()
+	newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
+	return JsonResponse(parsed_json)
+
+
+# def getBike(request):
+# 	print (request.body)
+# 	print request
+# 	return render(request, 'bike_donations/confirmation.html')
+>>>>>>> 98c46aa92ebef70695d2cc0e5d9c08e2423b8158

@@ -1,4 +1,4 @@
-angular.module('bikeSelect').controller('omniOptionsController', function($scope, boolService){
+angular.module('bikeSelect').controller('omniOptionsController', function($scope, boolService, bikeOptionsFactory){
 	$scope.bikeOption = boolService.returnSelect('bike');
 	$scope.componentOption = boolService.returnSelect('component');
 	$scope.otherOption = boolService.returnSelect('other');
@@ -27,5 +27,11 @@ angular.module('bikeSelect').controller('omniOptionsController', function($scope
 	$scope.buttonClicked = function(selection){
 		boolService.toggleSelect(selection);
 	};
+
+	$scope.create_category = function(){
+		console.log("SCOPING FOR CAT NAME");
+		bikeOptionsFactory.create_category();
+	}
+
 
 });

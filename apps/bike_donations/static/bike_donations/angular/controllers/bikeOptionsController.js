@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, bikeOptionsFactory, scrollService, boolService){
 	
 	bikeOptionsFactory.selectionData(function(data){
@@ -5,6 +6,24 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		console.log(data);
 	});
 	
+=======
+
+// angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, bikeOptionsFactory, scrollService, boolService){
+// 	bikeOptionsFactory.selectionData(function(data){
+// 		$scope.bikeType = bikeOptionsFactory.bikeType;
+// 		console.log(data);
+// 	});
+
+angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
+	$scope.bikeType = {};
+
+	$scope.goBack = function(){
+		$window.location = "/";
+	}
+
+	var test = bikeOptionsFactory.selectionData();
+
+>>>>>>> 98c46aa92ebef70695d2cc0e5d9c08e2423b8158
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
 	}, function(newValue, oldValue) {
@@ -17,11 +36,17 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		$scope.productOption = newValue.status;
 	}, true);
 
+	// $scope.getBike = function(){
+	// 	console.log("inside getbike method");
+	// 	bikeOptionsFactory.getBike();
+	// }
+
 	bikeOptionsFactory.assembleScope("bikeType", function(optObject){
 		for (var opt in optObject){
 			$scope.bikeType[opt] = optObject[opt].status
 		};
 	});
+
 
 	function optionClicked(type, select, prep){
 		var selectArr = ["wheels", "brand", "cosmetic", "frame", "features"];
@@ -53,7 +78,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 			if(prep){
 				bikeOptionsFactory.assembleScope(prep, function(optObject){
 					$scope[prep] = {};
-					
+
 					for (var opt in optObject){
 
 						if (optObject == 'frame'){
@@ -95,7 +120,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 				var change = function(){
 					scrollService.scrollTo(prep);
 				}
-				
+
 				setTimeout(change, 20)
 			}
 		};
@@ -129,10 +154,24 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	};
 
 	$scope.getBike = function(){
-		event.preventDefault();
-		var bike = bikeOptionsFactory.assembleBike();
-		bikeOptionsFactory.postBike(bike)
+
+		// event.preventDefault();
+		bikeOptionsFactory.assembleBike(function(bike){
+			$scope.bike_info = bike;
+			console.log($scope.bike_info)
+			console.log("bike returned", bike);
+			bikeOptionsFactory.postBike(bike)
+		});
+		// $location.path('/confirm');
 	};
+
+	$scope.confirm = function(){
+		console.log("going to confirm");
+		bikeOptionsFactory.assembleBike(function(bike){
+			$scope.assembled_bike=bike;
+		});
+		$scope.checkBike = true;
+	}
 
 
 

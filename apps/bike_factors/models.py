@@ -18,7 +18,7 @@ class BikeOption(models.Model):
 class WheelOption(models.Model):
 	option = models.CharField(max_length=150)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
-	requisites = models.ManyToManyField(BikeOption, verbose_name="Select bike types that this feature is avalable for")
+	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
 
 	def __str__(self):
 		return self.option
@@ -29,7 +29,7 @@ class WheelOption(models.Model):
 class BrandOption(models.Model):
 	option = models.CharField(max_length=150)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
-	requisites = models.ManyToManyField(BikeOption, verbose_name="Select bike types that this feature is avalable for")
+	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
 
 	def __str__(self):
 		return self.option
@@ -40,18 +40,18 @@ class BrandOption(models.Model):
 class CosmeticOption(models.Model):
 	option = models.CharField(max_length=150)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
-	requisites = models.ManyToManyField(BikeOption, verbose_name="Select bike types that this feature is avalable for")
+	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
 
 	def __str__(self):
 		return self.option
 
 	class Meta:
-		ordering = ['option']
+		ordering = ['-price_factor']
 
 class FrameOption(models.Model):
 	option = models.CharField(max_length=150)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
-	requisites = models.ManyToManyField(BikeOption, verbose_name="Select bike types that this feature is avalable for")
+	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
 
 	def __str__(self):
 		return self.option
@@ -62,7 +62,7 @@ class FrameOption(models.Model):
 class FeaturesOption(models.Model):
 	option = models.CharField(max_length=150)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
-	requisites = models.ManyToManyField(BikeOption, verbose_name="Select bike types that this feature is avalable for")
+	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
 
 	def __str__(self):
 		return self.option

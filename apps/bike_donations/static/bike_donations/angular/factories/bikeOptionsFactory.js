@@ -1,7 +1,8 @@
 angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 		var factory = {};
+		var assembled_bike = {};
 
-		factory.selectionData = function(callback){
+		factory.selectionData = function(){
 			$http.get('/form').success(function(response){
 				factory.bikeType = response.bikeType
 				factory.wheels = response.wheels
@@ -46,21 +47,35 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 							break;
 						}
 					}
+				console.log(response);
+			});
+		}
 
-						if (index != requiredArr.length){
-							$scope[prep][opt] = optObject[opt].status;
-						}
-					};elect])
-		};
 
-		factory.valueSelect = function(select, option){ 
+		factory.getBike = function(){
+			console.log("in factory to getbike");
+			$http.post('/confirmation/', {status: true}).success(function(){
+				// console.log();
+			});
+		}
+
+		factory.postBike = function(bikeObject){
+			console.log("hiya")
+			console.log("passed object", bikeObject)
+			$http.post('/samplePost/',bikeObject).success(function(response){
+				console.log('what?', response)
+			});
+		}
+
+
+		factory.valueSelect = function(select, option){
 
 			if (select != "features"){
 				this[select][option]["status"] = true;
 			}
 
 			console.log(this[select][option]);
-			
+
 
 			for (var selection in this[select]){
 				if (select != "features"){
@@ -77,7 +92,8 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			}
 		};
 
-		factory.assembleBike = function(){
+		factory.assembleBike = function(callback){
+			console.log("Hewwo");
 			var typeArr = ["bikeType", "wheels", "brand", "cosmetic", "frame", "features"];
 			var sType;
 			var bikeFinal = {
@@ -86,7 +102,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			};
 
 			for (var index = 0; index < typeArr.length; index++){
-				sType = this[typeArr[index]]; 
+				sType = this[typeArr[index]];
 				console.log(sType)
 				for (var opt in sType){
 					if (sType[opt].status == true){
@@ -100,7 +116,16 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 				}
 			}
 
-			return bikeFinal;
+			// assembled_bike = bikeFinal;
+
+			callback(bikeFinal);
+		}
+
+		factory.create_category = function(){
+			console.log("FACTORY NAME")
+			$http.post("/create_category/").success(function(response){
+				console.log("Factory response", response.text);
+			})
 		}
 
 

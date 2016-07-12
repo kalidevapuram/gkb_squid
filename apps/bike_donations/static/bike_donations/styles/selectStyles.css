@@ -8,4 +8,29 @@
 	border-bottom:.2em solid black;
 }
 
+@media print {
+	@page{
+		size: 3.0in 2.4in;
+			margin: 0in;
+	}
+	/*body {
+		size: 3.0in 2.4in;
+			margin: 0in;
+
+	}*/
+	.container, button {
+		display: none;
+	}
+	#label {
+		height: 100%;
+		width: 100%;
+		text-align: center;
+	}
+	#cost, #info {
+		/*font-size: 100%;*/
+		margin: 0px;
+	}
+
+}
+
 #
