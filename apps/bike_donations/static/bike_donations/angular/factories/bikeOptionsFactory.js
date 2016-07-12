@@ -1,9 +1,16 @@
 angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 		var factory = {};
+		var assembled_bike = {};
 
 		factory.selectionData = function(){
 			$http.get('/form').success(function(response){
 				console.log(response);
+			});
+		}
+		factory.getBike = function(){
+			console.log("in factory to getbike");
+			$http.post('/confirmation/', {status: true}).success(function(){
+				// console.log();
 			});
 		}
 
@@ -188,6 +195,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 					};
 				}
 			}
+			assembled_bike = bikeFinal;
 
 			return bikeFinal;
 		}

@@ -5,6 +5,8 @@ from .models import Bike
 import requests
 import json
 from .api import LightspeedApi
+# from django.views.generic.base import TemplateView
+
 
 
 # Create your views here.
@@ -54,3 +56,9 @@ def sample_post(request):
 	lightspeed = LightspeedApi()
 	newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
 	return render(request, 'bike_donations/index.html')
+
+
+# def getBike(request):
+# 	print (request.body)
+# 	print request
+# 	return render(request, 'bike_donations/confirmation.html')

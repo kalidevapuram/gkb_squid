@@ -3,9 +3,13 @@
 
 
 {% load staticfiles %}
+
+
 <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 <script type = "text/javascript" src = "https:ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+
 
 
 <!--<script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>-->
@@ -22,6 +26,7 @@ angular.module('bikeSelect', ['ngCookies'])
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/omniOptionsController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/bikeOptionsController.js' %}"></script>
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/confirmationController.js' %}"></script>
 
 
 </head>
@@ -43,6 +48,8 @@ angular.module('bikeSelect', ['ngCookies'])
 
 	<div id = "optionsBox">
 		<div ng-controller = "bikeOptionsController">
+			<form>
+			{% csrf_token %}
 			<div ng-if = "bikeOption && !productOption.status">
 				<div id = 'bike' class = 'selectBox'>
 					<h2>Select a bike</h2>
@@ -108,9 +115,14 @@ angular.module('bikeSelect', ['ngCookies'])
 			</div>
 			<div id = "bottom"></div>
 		</div>
+		<div ng-view="">
 
+        </div>
 
 	</div>
 
 </body>
+
+
+
 </html>
