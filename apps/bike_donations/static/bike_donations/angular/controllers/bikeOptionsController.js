@@ -24,11 +24,11 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	});
 
 	function optionClicked(type, select, prep){
+		var selectArr = ["wheels", "brand", "cosmetic", "frame", "features"];
 		if (select){
 
 			if (type == "bikeType"){
 				var selectionBool;
-				var selectArr = ["wheels", "brand", "cosmetic", "frame", "features"];
 
 				for (var idx = 0; idx < selectArr.length; idx++){
 					selectionBool = selectArr[idx]
@@ -56,9 +56,12 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 					
 					for (var opt in optObject){
 
+						if (optObject == 'frame'){
+							print("what?")
+						}
 						$scope[optObject[opt]] = {};
 
-						var requiredArr = optObject[opt].requisitess
+						var requiredArr = optObject[opt].requisites
 						var mustHave;
 						for (index = 0; index < requiredArr.length; index++){
 							mustHave = requiredArr[index];
@@ -72,6 +75,22 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 						}
 					};
 				});
+
+				console.log(Object.keys($scope[prep]).length);
+				if (Object.keys($scope[prep]).length == 0){
+					console.log("what?")
+					$scope[prep] = null;
+
+					for (var pIndex = 0; pIndex< selectArr.length; pIndex++){
+						if (selectArr[index] == prep){
+							break;
+						}
+					}
+
+					if (pIndex < prep.length - 1)
+						optionClicked('type','select',selectArr[index+1])
+
+				};
 
 				var change = function(){
 					scrollService.scrollTo(prep);
@@ -102,7 +121,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	});
 
 	$scope.$watch('selected.frame',function(){
-		optionClicked("frame",$scope.selected.frame, "features")
+		optionClicked("frame",$scope.selected['frame'], "features")
 	});
 
 	$scope.checkbox = function(item){

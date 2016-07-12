@@ -6,15 +6,51 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 				factory.bikeType = response.bikeType
 				factory.wheels = response.wheels
 				factory.brand = response.brand
-				factory.cosmetic = response.cosmetic
-				factory.frame = response.frame
+				factory.cosmetic = {};
+				console.log
+				factory['frame'] = response['frame']
 				factory.features = response.features
+
+				var leveled = false;
+				var i = 0;
+				var cArr = ["Perfect", "Good", "Average", "Poor"]
+				console.log(factory['frame'])
+				while(!leveled){
+					for (var level in response.cosmetic){
+						if (level == cArr[i]){
+							factory.cosmetic[level] = response.cosmetic[level]
+							i++;
+						}
+					}
+					if (i == cArr.length){
+						leveled = true;
+					}
+				}
+
 				callback(response);
 			});
 		}
 
 		factory.assembleScope = function(select, callback){
-			callback(this[select])
+				for (var opt in optObject){
+
+					if (optObject == 'frame'){
+						print("what?")
+					}
+
+					var requiredArr = optObject[opt].requisites
+						var mustHave;
+					for (index = 0; index < requiredArr.length; index++){
+						mustHave = requiredArr[index];
+							if (this.bikeType[mustHave]){
+							break;
+						}
+					}
+
+						if (index != requiredArr.length){
+							$scope[prep][opt] = optObject[opt].status;
+						}
+					};elect])
 		};
 
 		factory.valueSelect = function(select, option){ 
