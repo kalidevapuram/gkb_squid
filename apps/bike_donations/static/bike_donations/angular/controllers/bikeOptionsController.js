@@ -12,7 +12,9 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		$window.location = "/";
 	}
 
-	var test = bikeOptionsFactory.selectionData();
+ bikeOptionsFactory.selectionData(function(){
+			$scope.bikeType = bikeOptionsFactory.bikeType
+	});
 
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
