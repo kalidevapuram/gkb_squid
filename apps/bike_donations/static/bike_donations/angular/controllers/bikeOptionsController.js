@@ -49,7 +49,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 			if(prep){
 				bikeOptionsFactory.assembleScope(prep, function(optObject){
 					$scope[prep] = {};
-					
+
 					for (var opt in optObject){
 
 						console.log(opt);
@@ -75,7 +75,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 				var change = function(){
 					scrollService.scrollTo(prep);
 				}
-				
+
 				setTimeout(change, 20)
 			}
 		};
@@ -110,8 +110,11 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	$scope.getBike = function(){
 		var bike = bikeOptionsFactory.assembleBike();
-		console.log(bike)
-	}
+		console.log("All Done", bike);
+	};
+
+
+
 
 
 });

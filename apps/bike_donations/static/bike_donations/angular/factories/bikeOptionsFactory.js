@@ -84,7 +84,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 				"price_factor":1.0,
 				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 
-			},	
+			},
 		};
 
 		factory.frame = {
@@ -133,14 +133,14 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			callback(this[select])
 		};
 
-		factory.valueSelect = function(select, option){ 
+		factory.valueSelect = function(select, option){
 
 			if (select != "features"){
 				this[select][option]["status"] = true;
 			}
 
 			console.log(this[select][option]);
-			
+
 
 			for (var selection in this[select]){
 				if (select != "features"){
@@ -166,7 +166,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			};
 
 			for (var index = 0; index < typeArr.length; index++){
-				sType = this[typeArr[index]]; 
+				sType = this[typeArr[index]];
 				console.log(sType)
 				for (var opt in sType){
 					if (sType[opt].status == true){
@@ -181,6 +181,13 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			}
 
 			return bikeFinal;
+		}
+
+		factory.create_category = function(){
+			console.log("FACTORY NAME")
+			$http.post("/create_category/").success(function(response){
+				console.log("Factory response", response.text);
+			})
 		}
 
 

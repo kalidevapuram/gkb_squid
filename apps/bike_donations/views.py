@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption, WheelOption
 from .models import Bike
 import requests
+import json
 from .api import LightspeedApi
 
 
@@ -42,6 +43,6 @@ def create_category(request):
 
 	lightspeed = LightspeedApi()
 	category = lightspeed.create_category()
-	
-	print category 
+
+	print category
 	return render(request, 'bike_donations/index.html')
