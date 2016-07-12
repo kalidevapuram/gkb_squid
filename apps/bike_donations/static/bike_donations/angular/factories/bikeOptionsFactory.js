@@ -7,6 +7,14 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			});
 		}
 
+		factory.postBike = function(bikeObject){
+			console.log("hiya")
+			console.log(bikeObject)
+			$http.post('/samplePost/',bikeObject).success(function(response){
+				console.log('what?')
+			});
+		}
+
 		factory.bikeType = {
 			"kids": {
 				"status": false,
@@ -161,7 +169,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			var typeArr = ["bikeType", "wheels", "brand", "cosmetic", "frame", "features"];
 			var sType;
 			var bikeFinal = {
-				"price_factor": 200,
+				"price": 200,
 				"features":[]
 			};
 
@@ -175,7 +183,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 						}else{
 							bikeFinal.features.push(opt)
 						}
-						bikeFinal.price_factor *= sType[opt].price_factor;
+						bikeFinal.price *= sType[opt].price_factor;
 					};
 				}
 			}

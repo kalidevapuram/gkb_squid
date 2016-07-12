@@ -46,3 +46,8 @@ def create_category(request):
 
 	print category
 	return render(request, 'bike_donations/index.html')
+
+def sample_post(request):
+	print(request.body)
+	data = {"hey":"there"}
+	return 

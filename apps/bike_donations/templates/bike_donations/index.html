@@ -8,7 +8,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 
 
-<script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>
+<!--<script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>-->
+<script>
+angular.module('bikeSelect', ['ngCookies'])
+	.config(function($interpolateProvider, $httpProvider) {
+		$interpolateProvider.startSymbol('[[').endSymbol(']]');
+		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+	});
+</script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/scrollService.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script>
@@ -93,7 +101,9 @@
 			    			<input type="checkbox" id="[[key]]" ng-click = "checkbox(key)"/>[[key]]<br>
 			    		</label><br><br>
 			  		</span>
-			  		<button ng-click="getBike()">All Done</button>
+			  		<form>{% csrf_token %}
+			  			<button ng-click="getBike()">All Done</button>
+			  		</form>
 				</div>
 			</div>
 			<div id = "bottom"></div>
