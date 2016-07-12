@@ -1,0 +1,20 @@
+{
+  "name": "gkb_squid",
+  "version": "1.0.0",
+  "description": "1) 'cd' into the project directory 2) 'virtualenv venv' in terminal to creade virtual environment 3) 'pip install -r requirements.txt' to install nesseccary packages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abarlow85/gkb_squid.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abarlow85/gkb_squid/issues"
+  },
+  "homepage": "https://github.com/abarlow85/gkb_squid#readme"
+}
