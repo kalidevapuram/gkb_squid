@@ -34,8 +34,6 @@ class LightspeedApi(object):
 		pythonDictionary['Prices']['ItemPrice']['useType'] = "Default"
 		pythonDictionary['Prices']['ItemPrice']['useTypeID'] = 1
 		json_data = json.dumps(pythonDictionary)
-		print "This is the bicycle"
-		print json_data
 		response = requests.post(url, auth=self.auth, data=json_data)
 		print response.reason
 		return True
