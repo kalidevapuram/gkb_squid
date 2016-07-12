@@ -2,17 +2,27 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 		var factory = {};
 		var assembled_bike = {};
 
-		factory.selectionData = function(callback){
+		factory.selectionData = function(){
 			$http.get('/form').success(function(response){
-				factory.bikeType = response.bikeType
-				factory.wheels = response.wheels
-				factory.brand = response.brand
-				factory.cosmetic = response.cosmetic
-				factory.frame = response.frame
-				factory.features = response.features
-				callback(response);
+				console.log(response);
 			});
 		}
+
+
+		// getting data from DB
+
+		// factory.selectionData = function(callback){
+		// 	$http.get('/form').success(function(response){
+		// 		factory.bikeType = response.bikeType
+		// 		factory.wheels = response.wheels
+		// 		factory.brand = response.brand
+		// 		factory.cosmetic = response.cosmetic
+		// 		factory.frame = response.frame
+		// 		factory.features = response.features
+		// 		callback(response);
+		// 	});
+		// }
+
 		factory.getBike = function(){
 			console.log("in factory to getbike");
 			$http.post('/confirmation/', {status: true}).success(function(){
@@ -59,12 +69,12 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			"base":{
 				"status":false,
 				"price_factor":1.0,
-				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 			},
 			"roller":{
 				"status":false,
 				"price_factor":1.1,
-				"requisite": ["road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites": ["road", "city", "cruiser", "hybrid", "mountain"]
 			}
 		};
 
@@ -72,12 +82,12 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			"Trek":{
 				"status":false,
 				"price_factor": 1.2,
-				"requisite": ["road", "hybrid", "kids", "mountain"]
+				"requisites": ["road", "hybrid", "kids", "mountain"]
 			},
 			"Diamond":{
 				"status":false,
 				"price_factor":1.5,
-				"requisite": ["cruiser", "road", "city", "hybrid"]
+				"requisites": ["cruiser", "road", "city", "hybrid"]
 			},
 		};
 
@@ -85,25 +95,25 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			"perfect":{
 				"status":false,
 				"price_factor":1.3,
-				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 
 			},
 			"good":{
 				"status":false,
 				"price_factor": 1.15,
-				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 
 			},
 			"average":{
 				"status":false,
 				"price_factor":1.0,
-				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 
 			},
 			"poor":{
 				"status":false,
 				"price_factor":1.0,
-				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 
 			},
 		};
@@ -112,23 +122,23 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			"all":{
 				"status": false,
 				"price_factor": 1.0,
-				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 
 			},
 			"speed":{
 				"status": false,
 				"price_factor": 1.25,
-				"requisite":["road", "city", "cruiser", "hybrid"]
+				"requisites":["road", "city", "cruiser", "hybrid"]
 			},
 			"super":{
 				"status": false,
 				"price_factor": 1.9,
-				"requisite":["road", "city", "cruiser"],
+				"requisites":["road", "city", "cruiser"],
 			},
 			"rugged":{
 				"status": false,
 				"price_factor": 1.9,
-				"requisite":["road", "city", "cruiser"]
+				"requisites":["road", "city", "cruiser"]
 			}
 		};
 
@@ -136,17 +146,17 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			"Multi Speed":{
 				"status": false,
 				"price_factor":1.31,
-				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 			},
 			"Front Shock":{
 				"status": false,
 				"price_factor":1.23,
-				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 			},
 			"Bell":{
 				"status":false,
 				"price_factor":9.95,
-				"requisite":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
+				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
 			}
 		};
 
