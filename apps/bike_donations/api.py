@@ -12,10 +12,30 @@ class LightspeedApi(object):
 
 	def create_category(self):
 		url = 'https://api.merchantos.com/API/Account/132193/Item.json'
-		json_data = '{"@attributes":{"count":"1"},"customSku":"12345678902224","description":"French steel frame Huffy mountain bike average", "manufacturerID":"3","ItemShops":{"ItemShop":[{"qoh":"1","shopID":"1"}]}, "Prices":{"ItemPrice":[{"amount": "230", "useType":"Default", "useTypeID":"1"}]}}'
+		json_data = '{"@attributes":{"count":"1"},"customSku":"12345678902224","description":"Tibetan steel frame Huffy mountain bike average", "manufacturerID":"2","ItemShops":{"ItemShop":[{"qoh":"1","shopID":"1"}]}, "Prices":{"ItemPrice":[{"amount": "230", "useType":"Default", "useTypeID":"1"}]}}'
 		print "This is json_data"
 		print json_data
 		response = requests.post(url, auth=self.auth, data=json_data)
 		print dir(response)
+		print response.reason
+		return True
+
+	def create_bike(self, description, price):
+		url = 'https://api.merchantos.com/API/Account/132193/Item.json'
+		pythonDictionary = {}
+		pythonDictionary["description"] = description
+		pythonDictionary['ItemShops'] = {}
+		pythonDictionary['ItemShops']['ItemShop'] = {}
+		pythonDictionary['ItemShops']['ItemShop']['qoh'] = 1
+		pythonDictionary['ItemShops']['ItemShop']['shopID'] = 1
+		pythonDictionary['Prices'] = {}
+		pythonDictionary['Prices']['ItemPrice']={}
+		pythonDictionary['Prices']['ItemPrice']['amount'] = price
+		pythonDictionary['Prices']['ItemPrice']['useType'] = "Default"
+		pythonDictionary['Prices']['ItemPrice']['useTypeID'] = 1
+		json_data = json.dumps(pythonDictionary)
+		print "This is the bicycle"
+		print json_data
+		response = requests.post(url, auth=self.auth, data=json_data)
 		print response.reason
 		return True

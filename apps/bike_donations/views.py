@@ -48,6 +48,17 @@ def create_category(request):
 	return render(request, 'bike_donations/index.html')
 
 def sample_post(request):
-	print(request.body)
-	data = {"hey":"there"}
-	return 
+	print ("IN the VIEWS ALL ALONE", request.body)
+	parsed_json = json.loads(request.body)
+	print ("parsed json", parsed_json)
+	print("parsing for attributes", parsed_json['price'], parsed_json['bikeType'], parsed_json['cosmetic'], parsed_json['frame'])
+	descriptionString = str(parsed_json['bikeType'] + " " + parsed_json['brand'] + " " + parsed_json['cosmetic'])
+	bikePrice = parsed_json['price']
+	print ("Stringify", descriptionString)
+
+	# newBike = request.body
+	lightspeed = LightspeedApi()
+
+	newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
+	# print newBicycle
+	return render(request, 'bike_donations/index.html')

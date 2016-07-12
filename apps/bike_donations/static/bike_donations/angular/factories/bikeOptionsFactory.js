@@ -9,9 +9,9 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 
 		factory.postBike = function(bikeObject){
 			console.log("hiya")
-			console.log(bikeObject)
+			console.log("passed object", bikeObject)
 			$http.post('/samplePost/',bikeObject).success(function(response){
-				console.log('what?')
+				console.log('what?', response)
 			});
 		}
 
@@ -166,6 +166,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 		};
 
 		factory.assembleBike = function(){
+			console.log("Hewwo");
 			var typeArr = ["bikeType", "wheels", "brand", "cosmetic", "frame", "features"];
 			var sType;
 			var bikeFinal = {
