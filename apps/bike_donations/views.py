@@ -53,11 +53,6 @@ def create_category(request):
 
 	lightspeed = LightspeedApi()
 	category = lightspeed.create_category()
-<<<<<<< HEAD
-	
-	print category 
-	return render(request, 'bike_donations/index.html')
-=======
 
 	print category
 	return render(request, 'bike_donations/index.html')
@@ -75,4 +70,3 @@ def sample_post(request):
 # 	print (request.body)
 # 	print request
 # 	return render(request, 'bike_donations/confirmation.html')
->>>>>>> 98c46aa92ebef70695d2cc0e5d9c08e2423b8158

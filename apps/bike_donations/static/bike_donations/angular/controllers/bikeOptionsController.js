@@ -1,29 +1,11 @@
-<<<<<<< HEAD
-angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, bikeOptionsFactory, scrollService, boolService){
-	
-	bikeOptionsFactory.selectionData(function(data){
-		$scope.bikeType = bikeOptionsFactory.bikeType;
-		console.log(data);
-	});
-	
-=======
-
-// angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, bikeOptionsFactory, scrollService, boolService){
-// 	bikeOptionsFactory.selectionData(function(data){
-// 		$scope.bikeType = bikeOptionsFactory.bikeType;
-// 		console.log(data);
-// 	});
-
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
 
-	$scope.goBack = function(){
-		$window.location = "/";
-	}
+	bikeOptionsFactory.selectionData(function(data){
+		$scope.bikeType = data;
+	});
 
-	var test = bikeOptionsFactory.selectionData();
 
->>>>>>> 98c46aa92ebef70695d2cc0e5d9c08e2423b8158
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
 	}, function(newValue, oldValue) {
@@ -35,17 +17,6 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	}, function(newValue, oldValue) {
 		$scope.productOption = newValue.status;
 	}, true);
-
-	// $scope.getBike = function(){
-	// 	console.log("inside getbike method");
-	// 	bikeOptionsFactory.getBike();
-	// }
-
-	bikeOptionsFactory.assembleScope("bikeType", function(optObject){
-		for (var opt in optObject){
-			$scope.bikeType[opt] = optObject[opt].status
-		};
-	});
 
 
 	function optionClicked(type, select, prep){
@@ -76,46 +47,23 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 			bikeOptionsFactory.valueSelect(type, select);
 
 			if(prep){
-				bikeOptionsFactory.assembleScope(prep, function(optObject){
-					$scope[prep] = {};
 
-					for (var opt in optObject){
-
-						if (optObject == 'frame'){
-							print("what?")
+				function determineNext(objectInQuestion){
+					console.log(objectInQuestion)
+					if (Object.keys(objectInQuestion).length == 0){
+						var next = typeArr.indexOf('prep')
+						if (next != typeArr.length - 1){
+							bikeOptionsFactory.assembleScope(typeArr[next + 1], detimineNext)
 						}
-						$scope[optObject[opt]] = {};
-
-						var requiredArr = optObject[opt].requisites
-						var mustHave;
-						for (index = 0; index < requiredArr.length; index++){
-							mustHave = requiredArr[index];
-							if ($scope.bikeType[mustHave]){
-								break;
-							}
-						}
-
-						if (index != requiredArr.length){
-							$scope[prep][opt] = optObject[opt].status;
-						}
-					};
-				});
-
-				console.log(Object.keys($scope[prep]).length);
-				if (Object.keys($scope[prep]).length == 0){
-					console.log("what?")
-					$scope[prep] = null;
-
-					for (var pIndex = 0; pIndex< selectArr.length; pIndex++){
-						if (selectArr[index] == prep){
-							break;
-						}
+					}else{
+						$scope[prep] = objectInQuestion
 					}
+				}
 
-					if (pIndex < prep.length - 1)
-						optionClicked('type','select',selectArr[index+1])
-
-				};
+				bikeOptionsFactory.assembleScope(prep, function(optObject){
+					console.log(optObject)
+					determineNext(optObject)
+				});
 
 				var change = function(){
 					scrollService.scrollTo(prep);
@@ -155,11 +103,9 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	$scope.getBike = function(){
 
-		// event.preventDefault();
+		event.preventDefault();
 		bikeOptionsFactory.assembleBike(function(bike){
 			$scope.bike_info = bike;
-			console.log($scope.bike_info)
-			console.log("bike returned", bike);
 			bikeOptionsFactory.postBike(bike)
 		});
 		// $location.path('/confirm');
@@ -172,8 +118,5 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		});
 		$scope.checkBike = true;
 	}
-
-
-
 
 });
