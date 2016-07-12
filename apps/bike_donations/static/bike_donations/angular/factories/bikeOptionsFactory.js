@@ -24,15 +24,12 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 		// }
 
 		factory.getBike = function(){
-			console.log("in factory to getbike");
 			$http.post('/confirmation/', {status: true}).success(function(){
 				// console.log();
 			});
 		}
 
 		factory.postBike = function(bikeObject){
-			console.log("hiya")
-			console.log("passed object", bikeObject)
 			$http.post('/samplePost/',bikeObject).success(function(response){
 				console.log('what?', response)
 			});
