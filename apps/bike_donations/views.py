@@ -4,6 +4,8 @@ from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, Featu
 from .models import Bike
 import requests
 from .api import LightspeedApi
+# from django.views.generic.base import TemplateView
+
 
 
 # Create your views here.
@@ -45,3 +47,9 @@ def create_category(request):
 	
 	print category 
 	return render(request, 'bike_donations/index.html')
+
+
+# def getBike(request):
+# 	print (request.body)
+# 	print request
+# 	return render(request, 'bike_donations/confirmation.html')

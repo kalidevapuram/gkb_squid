@@ -13,11 +13,17 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		$scope.productOption = newValue.status;
 	}, true);
 
+	// $scope.getBike = function(){
+	// 	console.log("inside getbike method");
+	// 	bikeOptionsFactory.getBike();
+	// }
+
 	bikeOptionsFactory.assembleScope("bikeType", function(optObject){
 		for (var opt in optObject){
 			$scope.bikeType[opt] = optObject[opt].status
 		};
 	});
+
 
 	function optionClicked(type, select, prep){
 		if (select){
@@ -109,8 +115,16 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	};
 
 	$scope.getBike = function(){
+		// var get_bike = bikeOptionsFactory.getBike();
+		  
+
 		var bike = bikeOptionsFactory.assembleBike();
+
+		$scope.bike_info = bike;
+		console.log($scope.bike_info)
+		console.log("getting bike info");
 		console.log(bike)
+		$location.path('/confirm');
 	}
 
 
