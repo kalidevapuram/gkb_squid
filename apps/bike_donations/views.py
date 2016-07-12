@@ -4,6 +4,8 @@ from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, Featu
 from .models import Bike
 import requests
 import json
+import string
+import random
 from .api import LightspeedApi
 # from django.views.generic.base import TemplateView
 
@@ -11,6 +13,11 @@ from .api import LightspeedApi
 
 # Create your views here.
 def home(request):
+	sku_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
+	sku = ""
+	for _ in range(8):
+		sku += random.choice(sku_chars)
+	print sku
 	return render(request, 'bike_donations/index.html')
 
 def form_data(request):
@@ -38,7 +45,6 @@ def serialize_selections(query_set):
 				
 
 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor, 'requisites':requisites}
-	print data
 
 	return data
 

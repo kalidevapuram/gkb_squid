@@ -8,27 +8,44 @@
 	border-bottom:.2em solid black;
 }
 
+#label {
+		height: 100%;
+		width: 100%;
+		padding: 0px;
+		text-align: center;
+}
+
+#cost, #info {
+	/*font-size: 100%;*/
+	margin: 0px;
+	padding: 0px;
+}
+
 @media print {
 	@page{
-		size: 3.0in 2.4in;
-			margin: 0in;
+		size: 2.4in 2.4in;
+		margin: 0in;
+		padding: 0px;
 	}
-	/*body {
-		size: 3.0in 2.4in;
-			margin: 0in;
-
-	}*/
-	.container, button {
+	#header, #buttonBoxDiv, #optionsBox, button {
 		display: none;
 	}
 	#label {
 		height: 100%;
 		width: 100%;
+		margin: 0px;
+		padding: 0em;
 		text-align: center;
+	}
+	#barcode {
+		padding-top: 0px;
+		padding-left: 0px;
+		padding-right: 0px;
 	}
 	#cost, #info {
 		/*font-size: 100%;*/
 		margin: 0px;
+		padding: 0px;
 	}
 
 }
