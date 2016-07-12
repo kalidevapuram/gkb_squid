@@ -1,38 +1,35 @@
 angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 		var factory = {};
 		var assembled_bike = {};
-
-		factory.selectionData = function(){
-			$http.get('/form').success(function(response){
-				console.log(response);
-			});
-		}
+		//
+		// factory.selectionData = function(){
+		// 	$http.get('/form').success(function(response){
+		// 		console.log(response);
+		// 	});
+		// }
 
 
 		// getting data from DB
 
-		// factory.selectionData = function(callback){
-		// 	$http.get('/form').success(function(response){
-		// 		factory.bikeType = response.bikeType
-		// 		factory.wheels = response.wheels
-		// 		factory.brand = response.brand
-		// 		factory.cosmetic = response.cosmetic
-		// 		factory.frame = response.frame
-		// 		factory.features = response.features
-		// 		callback(response);
-		// 	});
-		// }
+		factory.selectionData = function(callback){
+			$http.get('/form').success(function(response){
+				factory.bikeType = response.bikeType
+				factory.wheels = response.wheels
+				factory.brand = response.brand
+				factory.cosmetic = response.cosmetic
+				factory.frame = response.frame
+				factory.features = response.features
+				callback(response);
+			});
+		}
 
 		factory.getBike = function(){
-			console.log("in factory to getbike");
 			$http.post('/confirmation/', {status: true}).success(function(){
 				// console.log();
 			});
 		}
 
 		factory.postBike = function(bikeObject){
-			console.log("hiya")
-			console.log("passed object", bikeObject)
 			$http.post('/samplePost/',bikeObject).success(function(response){
 				console.log('what?', response)
 			});
