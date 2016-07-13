@@ -100,8 +100,16 @@ def sample_post(request):
 	descriptionString = str(bikeoption.option + " " + brandoption.option + " " + cosmeticoption.option)
 	bikePrice = parsed_json['djangoPrice']
 	lightspeed = LightspeedApi()
+
+	#returns pythonDictionary
 	newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
-	return JsonResponse(parsed_json)
+
+	# session for label template
+	request.session['customSku'] = newBicycle['customSku']
+	request.session['brand'] = brandoption.option
+	request.session['bikeType'] = bikeoption.option
+	request.session['price'] = bikePrice
+	return JsonResponse({'success' : True})
 
 def getBikePrice(optionsArray, featuresoption):
 	basePrice = 200.00
@@ -115,6 +123,15 @@ def getBikePrice(optionsArray, featuresoption):
 		price_factor *= feature.price_factor
 	print ("price factor", price_factor, basePrice * float(price_factor) * nego_factor)
 	return basePrice * float(price_factor) * nego_factor
+
+def print_label(request):
+	label = {
+		'customSku' : request.session['customSku'],
+		'brand' : request.session['brand'],
+		'bikeType' : request.session['bikeType'],
+		'price' : request.session['price']
+	}
+	return render(request, 'bike_donations/barcode.html', label)
 
 
 # def getBike(request):

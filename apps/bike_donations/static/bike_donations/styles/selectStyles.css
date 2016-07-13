@@ -33,31 +33,35 @@
 }
 
 @media print {
-	@page{
-		size: 2.4in 2.4in;
-		margin: 0in;
+	*{
+		/*size: 2.0in 2.0in;*/
+		margin: 0px;
 		padding: 0px;
+
+	}
+
+	body {
+		height: 56mm;
+		width: 56mm;
 	}
 	#header, #buttonBoxDiv, #optionsBox, button {
 		display: none;
 	}
 	#label {
-		/*height: 100%;
-		width: 100%;
-*/		margin: -20px;
-		padding: 0px;
-		/*text-align: center;*/
+		height: 56mm;
+		width: 56mm;
+		/*margin: -20px;*/
+		/*padding: 0px;*/
+		text-align: center;
 	}
 	#barcode {
-		margin: -20px;
-		padding: 0px;
+		/*margin-left: -20px;*/
+		/*padding: 0px;*/
 	}
 	#cost, #info {
-		font-size: 100%;
+		/*font-size: 100%;*/
 		margin: 0px;
 		padding: 0px;
 	}
 
 }
-
-#
