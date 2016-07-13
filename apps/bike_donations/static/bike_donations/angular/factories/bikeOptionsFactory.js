@@ -19,31 +19,43 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 					}
 				}
 				factory.data.cosmetic = cos
+				console.log(factory.data)
 				callback(factory.data.bikeType)
 			});
 		}
 
-		factory.assembleScope = function(select, callback){
+		factory.assembleScope = function(select){
+			console.log('we are in assemble scope')
 			var forScope = {};
 
-			for (var opt in this.data[select]){
+			for (var opt in this['data'][select]){
+				console.log(opt)
 
-				var requiredArr = this.data[select][opt].requisites
+				var requiredArr = this.data[select][opt]['requisites']
+				console.log(requiredArr.length)
 				var mustHave;
 
-				for (index = 0; index < requiredArr.length; index++){
-					mustHave = requiredArr[index];
-					if (this.data.bikeType[mustHave]){
+				for (var wIndex = 0; wIndex < requiredArr.length; wIndex++){
+					mustHave = requiredArr[wIndex];
+					console.log(requiredArr)
+					console.log(mustHave)
+					console.log("we are testing " + requiredArr[wIndex])
+					console.log(this.data.bikeType)
+					if (this.data.bikeType[mustHave]['status'] == true){
+						console.log('found truth');
 						break;
 					}
-				}
+				};
 
-				if (index != requiredArr.length){
+				console.log("our " + wIndex.toString() +" should equal " + wIndex)
+				if (wIndex != requiredArr.length){
 					forScope[opt] = false;
+				}else{
+					console.log("WE FINALLY FAIL PRINT");
 				}
 			};
 
-			callback(forScope);
+			return forScope;
 		}
 
 
@@ -64,6 +76,8 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 
 
 		factory.valueSelect = function(select, option){
+			console.log('we are in value select')
+			console.log(this['data'])
 			if (select != "features"){
 				this.data[select][option]["status"] = true;
 			}
@@ -92,9 +106,9 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			for (var sType in this['data']){
 				console.log(sType)
 				for (var opt in sType){
-					if (sType[opt].status == true){
-						if (typeArr[index] != "features"){
-							bikeFinal[typeArr[index]] = opt
+					if (this['data'][opt].status == true){
+						if (sType != "features"){
+							bikeFinal[sType] = opt
 						}else{
 							bikeFinal.features.push(opt)
 						}

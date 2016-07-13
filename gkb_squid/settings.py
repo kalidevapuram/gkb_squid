@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.bike_donations',
     'apps.bike_factors',
+    'apps.component_factors'
 ]
 
 MIDDLEWARE_CLASSES = [
