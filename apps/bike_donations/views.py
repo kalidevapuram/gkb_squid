@@ -148,6 +148,7 @@ def serialize_componentFactor(query_set):
 	for obj in query_set:
 		comp[obj.option] = {'status': False, 'price': obj.price}
 
+	print comp
 	return comp
 
 

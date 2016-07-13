@@ -16,7 +16,7 @@
 				<div id = 'wheels' class = "selectBox" ng-if = "selected.type && wheels">
 					<h2>Select a Wheel</h2>
 					<select ng-model="selected.wheels" size = "3">
-						<option ng-repeat = "(key, value) in wheels" >[[key]]</option>
+						<option ng-repeat = "(key, value) in wheels" ng-selected = "value" >[[key]]</option>
 					</select>
 					<div class = "check" ng-if = 'selected.wheels'>
 						<img src = "{% static 'bike_donations/resources/lilcheck.png' %}">

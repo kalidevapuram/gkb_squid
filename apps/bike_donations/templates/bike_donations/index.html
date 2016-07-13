@@ -35,24 +35,8 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 
 
 
-<<<<<<< HEAD
-=======
-<!--<script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>-->
-<script>
-angular.module('bikeSelect', ['ngCookies','ngRoute'])
-	.config(function($interpolateProvider, $httpProvider/*, $routeProvider*/) {
 
-		// $routeProvider.when('/confirm', {
-	  //    controller: 'confirmationController',
-	  //    templateUrl: 'static/bike_donations/angular/partials/confirm.html'
-	  //  });
-
-		$interpolateProvider.startSymbol('[[').endSymbol(']]');
-		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
-        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-	});
 </script>
->>>>>>> 14df5778571fc51fd6fe2f6037fed5d6dafc4a1c
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/scrollService.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script>
@@ -72,28 +56,18 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 		<h2>Add To Inventory Demo</h2>
 		<img src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
 	</div>
-<<<<<<< HEAD
 	<div id = "mainBody">
-		<div ng-controller = "omniOptionsController">
+
+		<div ng-controller = "omniOptionsController" id="buttonBoxDiv">
 			<div id="buttonBox">
 				<button id = 'bike' ng-click = "buttonClicked('bike')">Bike</button>
 				<button id = 'component' ng-click = "buttonClicked('component')">Component</button>
 				<button id = 'other' ng-click = "buttonClicked('other')">Other</button>
 				<button id = 'addTrain' ng-click = "create_category()">Add trains</button>
 			</div>
-=======
-	<div ng-controller = "omniOptionsController" id="buttonBoxDiv">
-		<div id="buttonBox">
-			<button id = 'bike' ng-click = "buttonClicked('bike')">Bike</button>
-			<button id = 'component' ng-click = "buttonClicked('component')">Component</button>
-			<button id = 'other' ng-click = "buttonClicked('other')">Other</button>
-			<button id = 'addTrain' ng-click = "create_category()">Add trains</button>
->>>>>>> 14df5778571fc51fd6fe2f6037fed5d6dafc4a1c
 		</div>
-
 		<div ng-view=""></div>
 	</div>
-<<<<<<< HEAD
 
 	
 		<!--<div id = "optionsBox">
@@ -293,7 +267,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 				</script> -->
 	<!--	</div>  <a href=""></a> -->
 
-
+<!--
 </div>
 =======
 					<div id = 'features' class = "checkBoxBox" ng-if = "selected.frame && features">
@@ -361,13 +335,13 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 					</table>
 					<form>{% csrf_token %}
 						<button ng-click="getBike()">All Done</button>
-						<button ng-click="goBack()">Go Back</button>
+			-->		<!--	<button ng-click="goBack()">Go Back</button>
 					</form>
-			</div>
-	</div> <!-- end of #optionsBox -->
+			</div>-->
+	<!--</div> --><!-- end of #optionsBox --> 
 
-</div> <!-- end of bikeOptionsController -->
+<!--</div> end of bikeOptionsController 
 
->>>>>>> 14df5778571fc51fd6fe2f6037fed5d6dafc4a1c
+>>>>>>> 14df5778571fc51fd6fe2f6037fed5d6dafc4a1 -->
 </body>
 </html>

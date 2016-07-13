@@ -21,7 +21,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 
 	function optionClicked(type, select, prep){
-		var selectArr = ["wheels", "brand", "cosmetic", "frame", "features"];
+		var selectArr = ["wheels","brand", "cosmetic", "frame", "features"];
 		if (select && select != 'placed'){
 
 			if (type == "bikeType"){
@@ -50,12 +50,9 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 			if(prep){
 
 				var pIndex = selectArr.indexOf(prep)
-				console.log(pIndex)
 				while(pIndex < selectArr.length){
 					var nObject = bikeOptionsFactory.assembleScope(selectArr[pIndex])
-					console.log('found nObject of ' + selectArr[pIndex])
-					console.log(nObject)
-					console.log(Object.keys(nObject))
+
 					if (Object.keys(nObject).length != 0){
 						console.log("THIS SHOuLD BE PRINTING")
 						$scope[selectArr[pIndex]] = nObject;

@@ -1,5 +1,5 @@
 <div ng-controller = "componentOptionsController">
-	<div id = 'Handlebars'>
+	<div id = 'categoryPick'>
 		<h2>Pick a Category</h2>
 		<select ng-model = 'selected.which' size = '4'>
 			<option ng-repeat = 'item in which'>[[item]]</option>
@@ -7,9 +7,10 @@
 
 		<h2>Pick an item</h2>
 		<select ng-if = 'selected.which' size = '6'>
-			<option ng-repeat = '(key, value) in selected.obj'>[[key]]</option>
+			<option ng-repeat = '(key, value) in selected.obj' ng-selected = "value">[[key]]</option>
 		</select>
+		<button>Done</button>
 	</div>
-	<div id = 'Saddles'>
-	</div>
+
+
 </div>
