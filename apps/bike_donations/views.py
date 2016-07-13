@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption, WheelOption
 from .models import Bike
+from ..component_factors.models import HandlebarOption, SaddleOption
 import requests
 import json
 from .api import LightspeedApi
@@ -64,6 +65,27 @@ def sample_post(request):
 	lightspeed = LightspeedApi()
 	newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
 	return JsonResponse(parsed_json)
+
+def component_data(request):
+	context = {
+		'Handlebars' : serialize_componentFactor(HandlebarOption.objects.all()),
+		'Saddles' : serialize_componentFactor(SaddleOption.objects.all()),
+	}
+
+	return JsonResponse(context)
+
+def serialize_componentFactor(query_set):
+	comp = {}
+
+	for obj in query_set:
+		comp[obj.option] = {'status': False, 'price': obj.price}
+
+	return comp
+
+
+
+
+
 
 
 # def getBike(request):

@@ -1,4 +1,4 @@
-angular.module('bikeSelect').controller('omniOptionsController', function($scope, boolService, bikeOptionsFactory){
+angular.module('bikeSelect').controller('omniOptionsController',function($scope, $location, bikeOptionsFactory, boolService){
 	$scope.bikeOption = boolService.returnSelect('bike');
 	$scope.componentOption = boolService.returnSelect('component');
 	$scope.otherOption = boolService.returnSelect('other');
@@ -26,6 +26,11 @@ angular.module('bikeSelect').controller('omniOptionsController', function($scope
 
 	$scope.buttonClicked = function(selection){
 		boolService.toggleSelect(selection);
+		if (selection == 'bike'){
+			$location.path('/addBike')
+		}else if (selection == 'component'){
+			$location.path('/addComponent')
+		}
 	};
 
 	$scope.create_category = function(){

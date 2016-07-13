@@ -1,4 +1,4 @@
-<html ng-app = "bikeSelect">
+<html ng-app = 'bikeSelect'>
 <head>
 
 
@@ -7,44 +7,48 @@
 
 <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 <script type = "text/javascript" src = "https:ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>-->
 
-
-
-<script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>
-
-<!--
-<<script>
+<!--<script>
 angular.module('bikeSelect', ['ngCookies','ngRoute'])
-	.config(function($interpolateProvider, $httpProvider/*, $routeProvider*/) {
+	.config(['$interpolateProvider', '$httpProvider','$routeProvider','$locationProvider',
+		function($interpolateProvider, $httpProvider, $routeProvider, $locationProvider){
+			$routeProvider
+				.when('/addBike', {
+		 			controller: 'bikeSelect',
+		 			templateUrl: 'static/bike_donations/angular/partials/addBikePage.html'
+		 		})
 
-		 $routeProvider.when('/confirm', {
-	      controller: 'confirmationController',
-	      templateUrl: 'static/bike_donations/angular/partials/confirm.html'
-	    });
+		 	//$locationProvider.html5Mode({
+  			//	enabled: true,
+  			//	requireBase: false
+		 	//});
 
-		$interpolateProvider.startSymbol('[[').endSymbol(']]');
-		$httpProvider.defaults.xsrfCookieName = 'csrftoken';
-        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+			$interpolateProvider.startSymbol('[[').endSymbol(']]');
 
-</script>
--->
+			$httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        	$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+	}])
+</script>-->
 
-<script type = "text/css" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script>
+
+
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/scrollService.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script>
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/componentOptionsFactory.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/omniOptionsController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/bikeOptionsController.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/confirmationController.js' %}"></script>
-
+<script type = "text/javascript" src = "{% static 'bike_donations/angular/controllers/componentOptionsController.js' %}"></script>
 
 </head>
 
 
 <body>
 <div class="container">
-
 
 	<div id = "header">
 		<h2>Add To Inventory Demo</h2>
@@ -59,7 +63,11 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 			</div>
 		</div>
 
-		<div id = "optionsBox">
+		<div ng-view=""></div>
+	</div>
+
+	
+		<!--<div id = "optionsBox">
 			<div ng-controller = "bikeOptionsController">
 				<form>
 				{% csrf_token %}
@@ -182,7 +190,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 							<button ng-click="goBack()">Go Back</button>
 						</form>
 				</div>
-	</div> <!-- end of container -->
+	</div> <!-- end of container --><!--
 	</div>
 	</div>
 </div>
@@ -205,9 +213,6 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 	<!--	</div>  <a href=""></a> -->
 
 
-
+</div>
 </body>
-
-
-
 </html>

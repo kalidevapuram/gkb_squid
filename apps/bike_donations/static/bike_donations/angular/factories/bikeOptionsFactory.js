@@ -3,9 +3,39 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 		factory.data = {};
 		var assembled_bike = {};
 
+		factory.letterBy = function(passObject){
+			var letteredArr = Object.keys(passObject);
+
+			for (var iOne = 0; iOne < letteredArr.length - 1; iOne++){
+				var min = iOne;
+				for (var iTwo = iOne+1; iTwo < letteredArr.length; iTwo++){
+					if (letteredArr[iTwo]<letteredArr[min]){
+						min = iTwo;
+					}
+				};
+
+				var temp = letteredArr[iOne];
+				letteredArr[iOne] = letteredArr[min];
+				letteredArr[min] = temp;
+			}
+
+			console.log(letteredArr)
+			var finalObj = {};
+			for (var x = 0; x < letteredArr.length; x++){
+				var key = letteredArr[x]
+				finalObj[key] = passObject[key]
+			};
+
+			return finalObj
+		}
+
 		factory.selectionData = function(callback){
 			$http.get('/form').success(function(response){
-				factory.data = response
+				factory.data = {};
+
+				for(var object in response){
+					factory.data[object] = factory.letterBy(response[object])
+				}
 				var cos = {};
 				var leveled = false;
 				var i = 0;
@@ -70,8 +100,6 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 
 
 		factory.valueSelect = function(select, option){
-			console.log('we are in value select')
-			console.log(this['data'])
 			if (select != "features"){
 				this.data[select][option]["status"] = true;
 			}
