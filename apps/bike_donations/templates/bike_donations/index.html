@@ -189,19 +189,17 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 			<table class="table table-bordered table-responsive">
 				<thead>
 					<th>Model</th>
-					<th>Wheels</th>
 					<th>Brand</th>
 					<th>Cosmetics</th>
-					<th>Frame</th>
+					<th ng-if="assembled_bike.frame">Frame</th>
 					<th>Features</th>
 				</thead>
 				<tbody>
 					<tr>
 						<td>[[assembled_bike.bikeType]]</td>
-						<td>[[assembled_bike.wheels]]</td>
 						<td>[[assembled_bike.brand]]</td>
 						<td>[[assembled_bike.cosmetic]]</td>
-						<td>[[assembled_bike.frame]]</td>
+						<td ng-if="assembled_bike.frame">[[assembled_bike.frame]]</td>
 						<td>
 							<p ng-repeat="feature in assembled_bike.features">
 								[[feature]]
@@ -217,9 +215,11 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 							<button ng-click="getBike()" class="btn btn-success">All Done</button>
 							<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Go Back</button>
 						</div>
-						<p ng-if="posted">Please wait while donation is added to inventory</p>
 					</form>
 				</div>
+			</div>
+			<div class="row text-center">
+				<p ng-if="posted">Please wait while donation is added to inventory</p>
 			</div>
 
 		</div><!--ends ng-show for checkBike -->
