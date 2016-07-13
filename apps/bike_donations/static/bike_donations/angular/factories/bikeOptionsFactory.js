@@ -25,29 +25,23 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 		}
 
 		factory.assembleScope = function(select){
-			console.log('we are in assemble scope')
 			var forScope = {};
 
 			for (var opt in this['data'][select]){
-				console.log(opt)
 
 				var requiredArr = this.data[select][opt]['requisites']
-				console.log(requiredArr.length)
 				var mustHave;
 
 				for (var wIndex = 0; wIndex < requiredArr.length; wIndex++){
 					mustHave = requiredArr[wIndex];
-					console.log(requiredArr)
-					console.log(mustHave)
-					console.log("we are testing " + requiredArr[wIndex])
-					console.log(this.data.bikeType)
+					
 					if (this.data.bikeType[mustHave]['status'] == true){
-						console.log('found truth');
+						
 						break;
 					}
 				};
 
-				console.log("our " + wIndex.toString() +" should equal " + wIndex)
+				
 				if (wIndex != requiredArr.length){
 					forScope[opt] = false;
 				}else{
@@ -82,7 +76,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 				this.data[select][option]["status"] = true;
 			}
 
-			for (var selection in this[select]){
+			for (var selection in this.data[select]){
 				if (select != "features"){
 					if (selection != option){
 						this.data[select][selection]["status"] = false;
@@ -104,19 +98,19 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			};
 
 			for (var sType in this['data']){
-				console.log(sType)
-				for (var opt in sType){
-					if (this['data'][opt].status == true){
+				var tempType = this['data'][sType]
+				for (var opt in tempType){
+					if (tempType[opt].status == true){
 						if (sType != "features"){
 							bikeFinal[sType] = opt
 						}else{
 							bikeFinal.features.push(opt)
 						}
-						bikeFinal.price *= sType[opt].price_factor;
+						bikeFinal.price *= tempType[opt].price_factor;
 					};
 				}
 			}
-
+			console.log(bikeFinal)
 			callback(bikeFinal)
 		}
 
