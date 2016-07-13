@@ -26,6 +26,7 @@
 		text-align: center;
 }
 
+
 #cost, #info {
 	/*font-size: 100%;*/
 	margin: 0px;
@@ -60,8 +61,8 @@
 	}
 	#cost, #info {
 		/*font-size: 100%;*/
-		margin: 0px;
-		padding: 0px;
+		/*margin: 0px;
+		padding: 0px;*/
 	}
 
 }

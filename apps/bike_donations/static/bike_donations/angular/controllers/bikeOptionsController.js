@@ -1,6 +1,7 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
 
+
 	bikeOptionsFactory.selectionData(function(data){
 		for (var key in data){
 			$scope.bikeType[key] = data[key]['status']
@@ -21,7 +22,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 
 	function optionClicked(type, select, prep){
-		var selectArr = ["wheels", "brand", "cosmetic", "frame", "features"];
+		var selectArr = ["brand", "cosmetic", "frame", "features"];
 		if (select && select != 'placed'){
 
 			if (type == "bikeType"){
@@ -80,11 +81,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	$scope.$watch('selected.type',function(){
 		console.log('CHANGE')
-		optionClicked("bikeType",$scope.selected.type, "wheels")
-	});
-
-	$scope.$watch('selected.wheels',function(){
-		optionClicked("wheels",$scope.selected.wheels, "brand")
+		optionClicked("bikeType",$scope.selected.type, "brand")
 	});
 
 	$scope.$watch('selected.brand',function(){
@@ -106,6 +103,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.getBike = function(){
 
 		// event.preventDefault();
+		$scope.posted = true
 		bikeOptionsFactory.assembleBike(function(bike){
 			$scope.bike_info = bike;
 			bikeOptionsFactory.postBike(bike)
@@ -117,6 +115,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		console.log("going to confirm");
 		bikeOptionsFactory.assembleBike(function(bike){
 			$scope.assembled_bike=bike;
+			$scope.posted = false
 		});
 		$scope.checkBike = true;
 	}

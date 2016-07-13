@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption, WheelOption
+from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption
 from .models import Bike
 import requests
 import json
@@ -19,7 +19,6 @@ def home(request):
 def form_data(request):
 	context = {
 		'bikeType' : serialize_selections(BikeOption.objects.all()),
-		'wheels' : serialize_selections(WheelOption.objects.all()),
 		'brand' : serialize_selections(BrandOption.objects.all()),
 		'cosmetic' : serialize_selections(CosmeticOption.objects.all()),
 		'frame' : serialize_selections(FrameOption.objects.all()),
@@ -82,10 +81,6 @@ def sample_post(request):
 	else:
 		parsed_json['frame'] = None
 
-	wheeloption = WheelOption.objects.get(option=parsed_json["wheels"])
-	optionsArray.append(wheeloption)
-
-	parsed_json["wheels"]=wheeloption.id
 	parsed_json["features"]=[obj.id for obj in featuresoption]
 	parsed_json["brand"]=brandoption.id
 	parsed_json["cosmetic"]=cosmeticoption.id
@@ -122,7 +117,7 @@ def getBikePrice(optionsArray, featuresoption):
 		print feature, feature.price_factor
 		price_factor *= feature.price_factor
 	print ("price factor", price_factor, basePrice * float(price_factor) * nego_factor)
-	return basePrice * float(price_factor) * nego_factor
+	return format(basePrice * float(price_factor) * nego_factor, '.2f')
 
 def print_label(request):
 	label = {

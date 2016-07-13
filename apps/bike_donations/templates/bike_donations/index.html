@@ -67,17 +67,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 								<img src = "{% static 'bike_donations/resources/lilcheck.png' %}">
 							</div>
 						</div>
-					<div id = 'wheels' class = "selectBox" ng-if = "selected.type && wheels">
-						<h2>Select a Wheel</h2>
-						<select ng-model="selected.wheels" size = "3">
-							<option ng-repeat = "(key,value) in wheels" >[[key]]</option>
-						</select>
-						<div class = "check" ng-if = 'selected.wheels'>
-							<img src = "{% static 'bike_donations/resources/lilcheck.png' %}">
-
-						</div>
-					</div>
-					<div  id = 'brand' class = "selectBox" ng-if = "selected.wheels && brand">
+					<div  id = 'brand' class = "selectBox" ng-if = "selected.type && brand">
 						<h2>Select a Brand</h2>
 						<select ng-model="selected.brand" size = "3">
 							<option ng-repeat = "(key,value) in brand">[[key]]</option>
@@ -131,9 +121,6 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 								Model
 							</th>
 							<th>
-								Wheel
-							</th>
-							<th>
 								Brand
 							</th>
 							<th>
@@ -150,9 +137,6 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 							<tr>
 								<td>
 									[[assembled_bike.bikeType]]
-								</td>
-								<td>
-									[[assembled_bike.wheels]]
 								</td>
 								<td>
 									[[assembled_bike.brand]]
@@ -172,8 +156,10 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 					</table>
 					<form>{% csrf_token %}
 						<button ng-click="getBike()">All Done</button>
-						<button ng-click="goBack()">Go Back</button>
+						<button ng-click="goBack()" ng-if="!posted">Go Back</button>
 					</form>
+					<p ng-if="posted">Please wait while donation is added to inventory</p>
+
 			</div>
 	</div> <!-- end of #optionsBox -->
 

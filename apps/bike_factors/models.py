@@ -15,17 +15,6 @@ class BikeOption(models.Model):
 	class Meta:
 		ordering = ['option']
 
-class WheelOption(models.Model):
-	option = models.CharField(max_length=150)
-	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
-	requisites = models.ManyToManyField(BikeOption, verbose_name="Bike types that this feature is avalable for")
-
-	def __str__(self):
-		return self.option
-
-	class Meta:
-		ordering = ['option']
-
 class BrandOption(models.Model):
 	option = models.CharField(max_length=150)
 	price_factor = models.DecimalField(max_digits=3, decimal_places=2)
