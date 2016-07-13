@@ -1,0 +1,1 @@
+angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
