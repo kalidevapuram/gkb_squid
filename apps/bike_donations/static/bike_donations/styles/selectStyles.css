@@ -16,7 +16,8 @@
 }
 #header img {
 	display: inline-block;
-	padding-bottom: 0px;
+	position: absolute;
+	right: 0px;
 }
 
 #label {
@@ -31,6 +32,31 @@
 	margin: 0px;
 	padding: 0px;
 }
+table {
+	width: 100%;
+}
+.commit {
+	position: absolute;
+	right: 0px;
+}
+th {
+	color: green;
+}
+
+h4 {
+	color: #00A850;
+	display: inline-block;
+}
+.checkmark {
+	height: 8%;
+}
+.check {
+	display: inline-block;
+}
+select {
+	width: 100%;
+}
+
 
 @media print {
 	@page{
