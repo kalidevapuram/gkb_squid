@@ -27,7 +27,6 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 	});
 </script>
-<script type = "text/css" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/boolService.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/services/scrollService.js' %}"></script>
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/factories/bikeOptionsFactory.js' %}"></script>
@@ -59,27 +58,26 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 			<form>
 				{% csrf_token %}
 				<div ng-if = "bikeOption && !productOption.status">
-					<div id = 'bike' class = 'selectBox'>
-						<h2>Select a bike</h2>
-						<select ng-model="selected.type" size = "5">
-							<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
-						</select>
-						<div class = "check" ng-if = 'selected.type'>
-							<img src = "{% static 'bike_donations/resources/lilcheck.png' %}">
+						<div id = 'bike' class = 'selectBox'>
+							<h2>Select a bike</h2>
+							<select ng-model="selected.type" size = "5">
+								<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
+							</select>
+							<div class = "check" ng-if = 'selected.type'>
+								<img src = "{% static 'bike_donations/resources/lilcheck.png' %}">
+							</div>
 						</div>
-					</div>
-
-					<div id = 'wheels' class = "selectBox" ng-if = "selected.type">
+					<div id = 'wheels' class = "selectBox" ng-if = "selected.type && wheels">
 						<h2>Select a Wheel</h2>
 						<select ng-model="selected.wheels" size = "3">
 							<option ng-repeat = "(key, value) in wheels" >[[key]]</option>
 						</select>
 						<div class = "check" ng-if = 'selected.wheels'>
 							<img src = "{% static 'bike_donations/resources/lilcheck.png' %}">
+
 						</div>
 					</div>
-
-					<div  id = 'brand' class = "selectBox" ng-if = "selected.wheels">
+					<div  id = 'brand' class = "selectBox" ng-if = "selected.wheels && brand">
 						<h2>Select a Brand</h2>
 						<select ng-model="selected.brand" size = "3">
 							<option ng-repeat = "(key, value) in brand">[[key]]</option>
@@ -89,7 +87,8 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 						</div>
 					</div>
 
-					<div id = 'cosmetic' class = "selectBox" ng-if = "selected.brand">
+
+					<div id = 'cosmetic' class = "selectBox" ng-if = "selected.brand && cosmetic">
 						<h2>Select Cosmetic Quality</h2>
 						<select ng-model="selected.cosmetic" size = "5">
 							<option ng-repeat = "(key, value) in cosmetic">[[key]]</option>
@@ -98,9 +97,9 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 							<img src = "{% static 'bike_donations/resources/lilcheck.png' %}">
 						</div>
 					</div>
-					<div id = 'frame' class = "selectBox" ng-if = "selected.cosmetic">
+					<div id = 'frame' class = "selectBox" ng-if = "selected.cosmetic && frame">
 						<h2>Select a Frame</h2>
-						<select ng-model="selected.frame" size = "4">
+						<select ng-model="selected['frame']" size = "4">
 							<option ng-repeat = "(key, value) in frame">[[key]]</option>
 						</select>
 						<div class = "check" ng-if = 'selected.features'>
@@ -108,7 +107,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 						</div>
 					</div>
 
-					<div id = 'features' class = "checkBoxBox" ng-if = "selected.frame">
+					<div id = 'features' class = "checkBoxBox" ng-if = "selected.frame && features">
 						<h2>Add Features</h2>
 						<span ng-repeat="(key, value) in features">
 							<label>
@@ -116,87 +115,88 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 				    		</label><br><br>
 				  		</span>
 
-						<button ng-click="confirm()">Confirm</button>
-						
+							<form>
+								<button ng-click="confirm()">Confirm</button>
+							</form>
 					</div>
-				</div>
-			</form>
-		</div>
-		<div id = "bottom"></div>
-		<div ng-show="checkBike" id="confirmationDiv">
-			<p>
-				Confirmation would go here.
-			</p>
-				<table>
-					<thead>
-						<th>
-							Model
-						</th>
-						<th>
-							Wheel
-						</th>
-						<th>
-							Brand
-						</th>
-						<th>
-							Cosmetics
-						</th>
-						<th>
-							Frame
-						</th>
-						<th>
-							Features
-						</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								[[assembled_bike.bikeType]]
-							</td>
-							<td>
-								[[assembled_bike.wheels]]
-							</td>
-							<td>
-								[[assembled_bike.brand]]
-							</td>
-							<td>
-								[[assembled_bike.cosmetic]]
-							</td>
-							<td>
-								[[assembled_bike.frame]]
-							</td>
-							<td>
-								<p ng-repeat="feature in assembled_bike.features">							[[feature]]
-								</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<form>{% csrf_token %}
-					<button ng-click="getBike()">All Done</button>
-					<button ng-click="goBack()">Go Back</button>
-				</form>
-		</div>
-		
-	
-
-		<script src="{% static 'bike_donations/angular/JsBarcode.all.min.js' %}"></script>
-		<div id="label">
-			<img id="barcode" jsbarcode-value="GKBD00000001" jsbarcode-height="40" jsbarcode-width="1"></img>
-			<h1 id="cost">$239.99</h1>
-			<h1 id="info">Bike Type</br>Bike Model</h1>
-			<button onclick="window.print()">Print Label</button>
-		</div>
-		    
-			<script type="text/javascript">
-				JsBarcode('#barcode').init()
-			</script>
-
-	</div>
-</div>
+			</div>
+			<div id = "bottom"></div>
+			<div ng-show="checkBike">
+				<p>
+					Confirmation would go here.
+				</p>
+					<table>
+						<thead>
+							<th>
+								Model
+							</th>
+							<th>
+								Wheel
+							</th>
+							<th>
+								Brand
+							</th>
+							<th>
+								Cosmetics
+							</th>
+							<th>
+								Frame
+							</th>
+							<th>
+								Features
+							</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									[[assembled_bike.bikeType]]
+								</td>
+								<td>
+									[[assembled_bike.wheels]]
+								</td>
+								<td>
+									[[assembled_bike.brand]]
+								</td>
+								<td>
+									[[assembled_bike.cosmetic]]
+								</td>
+								<td>
+									[[assembled_bike.frame]]
+								</td>
+								<td>
+									<p ng-repeat="feature in assembled_bike.features">							[[feature]]
+									</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<form>{% csrf_token %}
+						<button ng-click="getBike()">All Done</button>
+						<button ng-click="goBack()">Go Back</button>
+					</form>
+			</div>
+	</div> <!-- end of #optionsBox -->
 
 
+			<!--<script src="{% static 'bike_donations/angular/JsBarcode.all.min.js' %}"></script>
+			<div id="label" ng-controller="bikeOptionsController">
+				<img id="barcode"
+			       jsbarcode-format="upc"
+			       jsbarcode-value="123456789012"
+			       jsbarcode-height="40"
+			       >
 
+			    </img>
+			    <h1 id="cost">$239.99</h1>
+			    <h1 id="info">Bike Type</br>Bike Model</h1>
+		    </div>
+		    <button>Print Label</print>
+				<script type="text/javascript">
+					JsBarcode('#barcode').init()
+				</script> -->
+	<!--	</div>  <a href=""></a> -->
+
+</div> <!-- end of bikeOptionsController -->
 
 </body>
 

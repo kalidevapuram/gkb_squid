@@ -2,7 +2,9 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.bikeType = {};
 
 	bikeOptionsFactory.selectionData(function(data){
-		$scope.bikeType = data;
+		for (var key in data){
+			$scope.bikeType[key] = data[key]['status']
+		}
 	});
 
 	$scope.$watch(function() {
@@ -20,7 +22,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	function optionClicked(type, select, prep){
 		var selectArr = ["wheels", "brand", "cosmetic", "frame", "features"];
-		if (select){
+		if (select && select != 'placed'){
 
 			if (type == "bikeType"){
 				var selectionBool;
@@ -47,25 +49,26 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 			if(prep){
 
-				function determineNext(objectInQuestion){
-					console.log(objectInQuestion)
-					if (Object.keys(objectInQuestion).length == 0){
-						var next = typeArr.indexOf('prep')
-						if (next != typeArr.length - 1){
-							bikeOptionsFactory.assembleScope(typeArr[next + 1], detimineNext)
-						}
+				var pIndex = selectArr.indexOf(prep)
+				console.log(pIndex)
+				while(pIndex < selectArr.length){
+					var nObject = bikeOptionsFactory.assembleScope(selectArr[pIndex])
+					console.log('found nObject of ' + selectArr[pIndex])
+					console.log(nObject)
+					console.log(Object.keys(nObject))
+					if (Object.keys(nObject).length != 0){
+						console.log("THIS SHOuLD BE PRINTING")
+						$scope[selectArr[pIndex]] = nObject;
+						break;
 					}else{
-						$scope[prep] = objectInQuestion
+						$scope.selected[selectArr[pIndex]] = "placed"
 					}
+
+					pIndex++
 				}
 
-				bikeOptionsFactory.assembleScope(prep, function(optObject){
-					console.log(optObject)
-					determineNext(optObject)
-				});
-
 				var change = function(){
-					scrollService.scrollTo(prep);
+					scrollService.scrollTo(selectArr[pIndex]);
 				}
 
 				setTimeout(change, 20)

@@ -19,31 +19,37 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 					}
 				}
 				factory.data.cosmetic = cos
+				console.log(factory.data)
 				callback(factory.data.bikeType)
 			});
 		}
 
-		factory.assembleScope = function(select, callback){
+		factory.assembleScope = function(select){
 			var forScope = {};
 
-			for (var opt in this.data[select]){
+			for (var opt in this['data'][select]){
 
-				var requiredArr = this.data[select][opt].requisites
+				var requiredArr = this.data[select][opt]['requisites']
 				var mustHave;
 
-				for (index = 0; index < requiredArr.length; index++){
-					mustHave = requiredArr[index];
-					if (this.data.bikeType[mustHave]){
+				for (var wIndex = 0; wIndex < requiredArr.length; wIndex++){
+					mustHave = requiredArr[wIndex];
+					
+					if (this.data.bikeType[mustHave]['status'] == true){
+						
 						break;
 					}
-				}
+				};
 
-				if (index != requiredArr.length){
+				
+				if (wIndex != requiredArr.length){
 					forScope[opt] = false;
+				}else{
+					console.log("WE FINALLY FAIL PRINT");
 				}
 			};
 
-			callback(forScope);
+			return forScope;
 		}
 
 		factory.getBike = function(){
@@ -60,11 +66,13 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 
 
 		factory.valueSelect = function(select, option){
+			console.log('we are in value select')
+			console.log(this['data'])
 			if (select != "features"){
 				this.data[select][option]["status"] = true;
 			}
 
-			for (var selection in this[select]){
+			for (var selection in this.data[select]){
 				if (select != "features"){
 					if (selection != option){
 						this.data[select][selection]["status"] = false;
@@ -86,19 +94,19 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			};
 
 			for (var sType in this['data']){
-				console.log(sType)
-				for (var opt in sType){
-					if (sType[opt].status == true){
-						if (typeArr[index] != "features"){
-							bikeFinal[typeArr[index]] = opt
+				var tempType = this['data'][sType]
+				for (var opt in tempType){
+					if (tempType[opt].status == true){
+						if (sType != "features"){
+							bikeFinal[sType] = opt
 						}else{
 							bikeFinal.features.push(opt)
 						}
-						bikeFinal.price *= sType[opt].price_factor;
+						bikeFinal.price *= tempType[opt].price_factor;
 					};
 				}
 			}
-
+			console.log(bikeFinal)
 			callback(bikeFinal)
 		}
 
