@@ -72,11 +72,19 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 					<div id = "bike">
 
 						<div class="row">
-							<div class="col-xs-12">
+							<div class="col-xs-8">
 								<h4>Select a bike</h4>
 								<div class="check" ng-if="selected.type">
 									<img class="checkmark" src = "{% static 'bike_donations/resources/lilcheck.png' %}">
 								</div>
+							</div>
+							<div class="col-xs-4 notepad">
+								<p>This is my notepad to show everything!</p>
+								<p>Model:</p>
+								<p>Brand:</p>
+								<p>Cosmetics:</p>
+								<p>Frame:</p>
+								<p>Features:</p>
 							</div>
 						</div>
 
@@ -181,6 +189,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 						</div>
 					</div>
 				</div><!--closes features-->
+
 			</div><!--closes ng-if bikeOption-->
 		</form>
 

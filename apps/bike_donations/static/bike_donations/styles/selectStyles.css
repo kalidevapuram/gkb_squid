@@ -40,6 +40,9 @@ table {
 	position: absolute;
 	right: 0px;
 }
+.notepad {
+	background-color: yellow;
+}
 th {
 	color: green;
 }
