@@ -1,26 +1,49 @@
 angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 		var factory = {};
+		factory.data = {};
 		var assembled_bike = {};
-		//
-		// factory.selectionData = function(){
-		// 	$http.get('/form').success(function(response){
-		// 		console.log(response);
-		// 	});
-		// }
-
-
-		// getting data from DB
 
 		factory.selectionData = function(callback){
 			$http.get('/form').success(function(response){
-				factory.bikeType = response.bikeType
-				factory.wheels = response.wheels
-				factory.brand = response.brand
-				factory.cosmetic = response.cosmetic
-				factory.frame = response.frame
-				factory.features = response.features
-				callback(response);
+				factory.data = response
+				var cos = {};
+				var leveled = false;
+				var i = 0;
+				var cArr = ["Perfect", "Good", "Average", "Poor"]
+				while(i < cArr.length){
+					for (var level in response.cosmetic){
+						if (level == cArr[i]){
+							cos[level] = response.cosmetic[level]
+							i++;
+						}
+					}
+				}
+				factory.data.cosmetic = cos
+				callback(factory.data.bikeType)
 			});
+		}
+
+		factory.assembleScope = function(select, callback){
+			var forScope = {};
+
+			for (var opt in this.data[select]){
+
+				var requiredArr = this.data[select][opt].requisites
+				var mustHave;
+
+				for (index = 0; index < requiredArr.length; index++){
+					mustHave = requiredArr[index];
+					if (this.data.bikeType[mustHave]){
+						break;
+					}
+				}
+
+				if (index != requiredArr.length){
+					forScope[opt] = false;
+				}
+			};
+
+			callback(forScope);
 		}
 
 		factory.getBike = function(){
@@ -35,167 +58,34 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			});
 		}
 
-		factory.bikeType = {
-			"kids": {
-				"status": false,
-				"price_factor": 0.3
-			},
-			"hybrid": {
-				"status": false,
-				"price_factor": 1
-			},
-			"cruiser": {
-				"status": false,
-				"price_factor": 0.5
-			},
-			"city": {
-				"status": false,
-				"price_factor": 0.8
-			},
-			"road": {
-				"status": false,
-				"price_factor": 0.9
-			},
-			"mountain": {
-				"status": false,
-				"price_factor": 1
-			}
-		};
-
-		factory.wheels = {
-			"base":{
-				"status":false,
-				"price_factor":1.0,
-				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
-			},
-			"roller":{
-				"status":false,
-				"price_factor":1.1,
-				"requisites": ["road", "city", "cruiser", "hybrid", "mountain"]
-			}
-		};
-
-		factory.brand = {
-			"Trek":{
-				"status":false,
-				"price_factor": 1.2,
-				"requisites": ["road", "hybrid", "kids", "mountain"]
-			},
-			"Diamond":{
-				"status":false,
-				"price_factor":1.5,
-				"requisites": ["cruiser", "road", "city", "hybrid"]
-			},
-		};
-
-		factory.cosmetic = {
-			"perfect":{
-				"status":false,
-				"price_factor":1.3,
-				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
-
-			},
-			"good":{
-				"status":false,
-				"price_factor": 1.15,
-				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
-
-			},
-			"average":{
-				"status":false,
-				"price_factor":1.0,
-				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
-
-			},
-			"poor":{
-				"status":false,
-				"price_factor":1.0,
-				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
-
-			},
-		};
-
-		factory.frame = {
-			"all":{
-				"status": false,
-				"price_factor": 1.0,
-				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
-
-			},
-			"speed":{
-				"status": false,
-				"price_factor": 1.25,
-				"requisites":["road", "city", "cruiser", "hybrid"]
-			},
-			"super":{
-				"status": false,
-				"price_factor": 1.9,
-				"requisites":["road", "city", "cruiser"],
-			},
-			"rugged":{
-				"status": false,
-				"price_factor": 1.9,
-				"requisites":["road", "city", "cruiser"]
-			}
-		};
-
-		factory.features = {
-			"Multi Speed":{
-				"status": false,
-				"price_factor":1.31,
-				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
-			},
-			"Front Shock":{
-				"status": false,
-				"price_factor":1.23,
-				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
-			},
-			"Bell":{
-				"status":false,
-				"price_factor":9.95,
-				"requisites":["kids", "road", "city", "cruiser", "hybrid", "mountain"]
-			}
-		};
-
-		factory.assembleScope = function(select, callback){
-			callback(this[select])
-		};
 
 		factory.valueSelect = function(select, option){
-
 			if (select != "features"){
-				this[select][option]["status"] = true;
+				this.data[select][option]["status"] = true;
 			}
-
-			console.log(this[select][option]);
-
 
 			for (var selection in this[select]){
 				if (select != "features"){
 					if (selection != option){
-						this[select][selection]["status"] = false;
+						this.data[select][selection]["status"] = false;
 					}
 				}else if (selection == option){
-					if (this[select][selection]["status"]== false){
-						this[select][selection]["status"] = true;
+					if (this.data[select][selection]["status"]== false){
+						this.data[select][selection]["status"] = true;
 					}else{
-						this[select][selection]["status"] = false;
+						this.data[select][selection]["status"] = false;
 					}
 				}
 			}
 		};
 
 		factory.assembleBike = function(callback){
-			console.log("Hewwo");
-			var typeArr = ["bikeType", "wheels", "brand", "cosmetic", "frame", "features"];
-			var sType;
 			var bikeFinal = {
 				"price": 200,
 				"features":[]
 			};
 
-			for (var index = 0; index < typeArr.length; index++){
-				sType = this[typeArr[index]];
+			for (var sType in this['data']){
 				console.log(sType)
 				for (var opt in sType){
 					if (sType[opt].status == true){
@@ -209,16 +99,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 				}
 			}
 
-			// assembled_bike = bikeFinal;
-
-			callback(bikeFinal);
-		}
-
-		factory.create_category = function(){
-			console.log("FACTORY NAME")
-			$http.post("/create_category/").success(function(response){
-				console.log("Factory response", response.text);
-			})
+			callback(bikeFinal)
 		}
 
 
