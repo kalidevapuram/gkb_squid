@@ -12,32 +12,61 @@
 	display:block;
 	height:3.5em;
 	background: rgba(255,255,255 ,.7);
+}
+#header h2{
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 30px;
 
+}
+#header img {
+	display: inline-block;
+	padding-bottom: 0px;
+}
+
+#label {
+		height: 100%;
+		width: 100%;
+		padding: 0px;
+		text-align: center;
+}
+
+#cost, #info {
+	/*font-size: 100%;*/
+	margin: 0px;
+	padding: 0px;
 }
 
 @media print {
-	@page{
-		size: 3.0in 2.4in;
-			margin: 0in;
-	}
-	/*body {
-		size: 3.0in 2.4in;
-			margin: 0in;
+	*{
+		/*size: 2.0in 2.0in;*/
+		margin: 0px;
+		padding: 0px;
 
-	}*/
-	.container, button {
+	}
+
+	body {
+		height: 56mm;
+		width: 56mm;
+	}
+	#header, #buttonBoxDiv, #optionsBox, button {
 		display: none;
 	}
 	#label {
-		height: 100%;
-		width: 100%;
+		height: 56mm;
+		width: 56mm;
+		/*margin: -20px;*/
+		/*padding: 0px;*/
 		text-align: center;
+	}
+	#barcode {
+		/*margin-left: -20px;*/
+		/*padding: 0px;*/
 	}
 	#cost, #info {
 		/*font-size: 100%;*/
 		margin: 0px;
+		padding: 0px;
 	}
 
 }
-
-#

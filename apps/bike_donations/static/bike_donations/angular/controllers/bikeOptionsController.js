@@ -7,7 +7,6 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		}
 	});
 
-
 	$scope.$watch(function() {
 		return boolService.returnSelect('bike');
 	}, function(newValue, oldValue) {
@@ -106,12 +105,12 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	$scope.getBike = function(){
 
-		event.preventDefault();
+		// event.preventDefault();
 		bikeOptionsFactory.assembleBike(function(bike){
 			$scope.bike_info = bike;
 			bikeOptionsFactory.postBike(bike)
 		});
-		// $location.path('/confirm');
+		
 	};
 
 	$scope.confirm = function(){

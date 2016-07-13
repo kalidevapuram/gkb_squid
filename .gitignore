@@ -79,6 +79,7 @@ celerybeat-schedule
 .env
 
 # virtualenv
+test/
 venv/
 ENV/
 
@@ -87,3 +88,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+node_modules/
+bower_components/

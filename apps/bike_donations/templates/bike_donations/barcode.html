@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
+	<script src="{% static 'bike_donations/angular/JsBarcode.all.min.js' %}"></script>
+
+	<title>Print Label</title>
+</head>
+<body>
+	<div id="label" ng-controller="bikeOptionsController">
+		<img id="barcode" 
+			jsbarcode-value="{{customSku}}"
+			jsbarcode-height="40"
+			jsbarcode-width="1"
+		></img>
+		<h2 id="cost">${{price}}</h2>
+	    <h2 id="info">{{bikeType}}</br>{{brand}}</h2>
+	    <button onclick="window.print()">Print Label</button>
+	</div>
+	<button id="labelBackBtn"><a href="/">Done</a></button>
+		    
+</body>
+<script type="text/javascript">
+	JsBarcode('#barcode').init()
+</script>
+</html>

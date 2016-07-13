@@ -1,4 +1,4 @@
-angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
+angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $window){
 		var factory = {};
 		factory.data = {};
 		var assembled_bike = {};
@@ -33,9 +33,13 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			$http.get('/form').success(function(response){
 				factory.data = {};
 
-				for(var object in response){
-					factory.data[object] = factory.letterBy(response[object])
-				}
+                for(var object in response){
+                	if (object != 'features') {
+                    	factory.data[object] = factory.letterBy(response[object])
+                    } else {
+                    	factory.data[object] = response[object];
+                    }
+                }
 				var cos = {};
 				var leveled = false;
 				var i = 0;
@@ -52,6 +56,31 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 				console.log(factory.data)
 				callback(factory.data.bikeType)
 			});
+		}
+
+		factory.letterBy = function(passObject){
+		    var letteredArr = Object.keys(passObject);
+
+		    for (var iOne = 0; iOne < letteredArr.length - 1; iOne++){
+		        var min = iOne;
+		        for (var iTwo = iOne+1; iTwo < letteredArr.length; iTwo++){
+		            if (letteredArr[iTwo]<letteredArr[min]){
+		                min = iTwo;
+		            }
+		        };
+
+		        var temp = letteredArr[iOne];
+		        letteredArr[iOne] = letteredArr[min];
+		        letteredArr[min] = temp;
+		    }
+
+		    var finalObj = {};
+		    for (var x = 0; x < letteredArr.length; x++){
+		        var key = letteredArr[x]
+		        finalObj[key] = passObject[key]
+		    };
+
+		    return finalObj
 		}
 
 		factory.assembleScope = function(select){
@@ -82,19 +111,17 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http){
 			return forScope;
 		}
 
-
 		factory.getBike = function(){
-			console.log("in factory to getbike");
 			$http.post('/confirmation/', {status: true}).success(function(){
 				// console.log();
 			});
 		}
 
 		factory.postBike = function(bikeObject){
-			console.log("hiya")
-			console.log("passed object", bikeObject)
 			$http.post('/samplePost/',bikeObject).success(function(response){
-				console.log('what?', response)
+				if (response.success == true) {
+					$window.location = "/print/"
+				}
 			});
 		}
 

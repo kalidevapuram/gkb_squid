@@ -5,7 +5,10 @@ from .models import Bike
 from ..component_factors.models import HandlebarOption, SaddleOption
 import requests
 import json
+import string
+import random
 from .api import LightspeedApi
+from .forms import BikeForm
 # from django.views.generic.base import TemplateView
 
 
@@ -36,10 +39,9 @@ def serialize_selections(query_set):
 			requisites = []
 			for req in obj.requisites.values():
 				requisites.append(req['option'])
-				
+
 
 			data[obj.option] = {'status' : False, 'price_factor' : obj.price_factor, 'requisites':requisites}
-	print data
 
 	return data
 
@@ -60,11 +62,77 @@ def create_category(request):
 
 def sample_post(request):
 	parsed_json = json.loads(request.body)
-	descriptionString = str(parsed_json['bikeType'] + " " + parsed_json['brand'] + " " + parsed_json['cosmetic'])
-	bikePrice = parsed_json['price']
+	optionsArray = []
+
+	bikeoption = BikeOption.objects.get(option=parsed_json["bikeType"])
+	optionsArray.append(bikeoption)
+
+	brandoption = BrandOption.objects.get(option=parsed_json["brand"])
+	optionsArray.append(brandoption)
+
+	cosmeticoption = CosmeticOption.objects.get(option=parsed_json["cosmetic"])
+	optionsArray.append(cosmeticoption)
+
+
+	featuresoption = [FeaturesOption.objects.get(option=feature) for feature in parsed_json["features"]]
+
+	if 'frame' in parsed_json:
+		frameoption = FrameOption.objects.get(option=parsed_json["frame"])
+		optionsArray.append(frameoption)
+		parsed_json["frame"]=frameoption.id
+	else:
+		parsed_json['frame'] = None
+
+	wheeloption = WheelOption.objects.get(option=parsed_json["wheels"])
+	optionsArray.append(wheeloption)
+
+	parsed_json["wheels"]=wheeloption.id
+	parsed_json["features"]=[obj.id for obj in featuresoption]
+	parsed_json["brand"]=brandoption.id
+	parsed_json["cosmetic"]=cosmeticoption.id
+	parsed_json["bikeType"] = bikeoption.id
+	form = BikeForm(parsed_json)
+
+	if form.is_valid():
+		print ("In the forms", form["bikeType"].value())
+		parsed_json["djangoPrice"] = getBikePrice(optionsArray, featuresoption)
+	else:
+		print ("Not valid", form.errors.as_json())
+	descriptionString = str(bikeoption.option + " " + brandoption.option + " " + cosmeticoption.option)
+	bikePrice = parsed_json['djangoPrice']
 	lightspeed = LightspeedApi()
+
+	#returns pythonDictionary
 	newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
-	return JsonResponse(parsed_json)
+
+	# session for label template
+	request.session['customSku'] = newBicycle['customSku']
+	request.session['brand'] = brandoption.option
+	request.session['bikeType'] = bikeoption.option
+	request.session['price'] = bikePrice
+	return JsonResponse({'success' : True})
+
+def getBikePrice(optionsArray, featuresoption):
+	basePrice = 200.00
+	price_factor = 1
+	nego_factor = 1.05
+	for option in optionsArray:
+		print option, option.price_factor
+		price_factor *= option.price_factor
+	for feature in featuresoption:
+		print feature, feature.price_factor
+		price_factor *= feature.price_factor
+	print ("price factor", price_factor, basePrice * float(price_factor) * nego_factor)
+	return basePrice * float(price_factor) * nego_factor
+
+def print_label(request):
+	label = {
+		'customSku' : request.session['customSku'],
+		'brand' : request.session['brand'],
+		'bikeType' : request.session['bikeType'],
+		'price' : request.session['price']
+	}
+	return render(request, 'bike_donations/barcode.html', label)
 
 def component_data(request):
 	context = {
