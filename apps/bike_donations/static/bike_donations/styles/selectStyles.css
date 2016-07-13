@@ -6,6 +6,13 @@
 
 #header{
 	border-bottom:.2em solid black;
+	position: fixed;
+	width: 100%;
+	top:0;
+	display:block;
+	height:3.5em;
+	background: rgba(255,255,255 ,.7);
+
 }
 
 @media print {

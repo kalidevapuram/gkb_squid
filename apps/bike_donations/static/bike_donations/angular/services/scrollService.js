@@ -31,12 +31,18 @@ angular.module('bikeSelect').service('scrollService', function(){
                 return document.documentElement.scrollTop;
             // Internet Explorer 6, 7 and 8
             if (document.body.scrollTop) return document.body.scrollTop;
-            return 0;
+            return 80;
         }
         
         function elmYPosition(eID) {
             var elm = document.getElementById(eID);
             var y = elm.offsetTop;
+            console.log(elm.offsetHeight)
+
+            if (elm.offsetHeight > 300){
+               y-=80;
+            }
+
             var node = elm;
             while (node.offsetParent && node.offsetParent != document.body) {
                 node = node.offsetParent;
