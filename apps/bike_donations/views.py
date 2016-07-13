@@ -14,11 +14,6 @@ from .forms import BikeForm
 
 # Create your views here.
 def home(request):
-	sku_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
-	sku = ""
-	for _ in range(8):
-		sku += random.choice(sku_chars)
-	print sku
 	return render(request, 'bike_donations/index.html')
 
 def form_data(request):
@@ -66,25 +61,32 @@ def create_category(request):
 
 def sample_post(request):
 	parsed_json = json.loads(request.body)
-	print("parsed json", parsed_json)
+	optionsArray = []
+
 	bikeoption = BikeOption.objects.get(option=parsed_json["bikeType"])
-	print ("bike option retrieved", bikeoption, bikeoption.id)
+	optionsArray.append(bikeoption)
+
 	brandoption = BrandOption.objects.get(option=parsed_json["brand"])
+	optionsArray.append(brandoption)
 
 	cosmeticoption = CosmeticOption.objects.get(option=parsed_json["cosmetic"])
+	optionsArray.append(cosmeticoption)
 
 
 	featuresoption = [FeaturesOption.objects.get(option=feature) for feature in parsed_json["features"]]
 
-	frameoption = FrameOption.objects.get(option=parsed_json["frame"])
+	if 'frame' in parsed_json:
+		frameoption = FrameOption.objects.get(option=parsed_json["frame"])
+		optionsArray.append(frameoption)
+		parsed_json["frame"]=frameoption.id
+	else:
+		parsed_json['frame'] = None
 
 	wheeloption = WheelOption.objects.get(option=parsed_json["wheels"])
-
-	optionsArray = [brandoption, cosmeticoption, frameoption, wheeloption, bikeoption]
+	optionsArray.append(wheeloption)
 
 	parsed_json["wheels"]=wheeloption.id
 	parsed_json["features"]=[obj.id for obj in featuresoption]
-	parsed_json["frame"]=frameoption.id
 	parsed_json["brand"]=brandoption.id
 	parsed_json["cosmetic"]=cosmeticoption.id
 	parsed_json["bikeType"] = bikeoption.id
@@ -95,23 +97,24 @@ def sample_post(request):
 		parsed_json["djangoPrice"] = getBikePrice(optionsArray, featuresoption)
 	else:
 		print ("Not valid", form.errors.as_json())
-	# descriptionString = str(parsed_json['bikeType'] + " " + parsed_json['brand'] + " " + parsed_json['cosmetic'])
-	# bikePrice = parsed_json['price']
-	# lightspeed = LightspeedApi()
-	# newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
+	descriptionString = str(bikeoption.option + " " + brandoption.option + " " + cosmeticoption.option)
+	bikePrice = parsed_json['djangoPrice']
+	lightspeed = LightspeedApi()
+	newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
 	return JsonResponse(parsed_json)
 
 def getBikePrice(optionsArray, featuresoption):
 	basePrice = 200.00
 	price_factor = 1
+	nego_factor = 1.05
 	for option in optionsArray:
 		print option, option.price_factor
 		price_factor *= option.price_factor
 	for feature in featuresoption:
 		print feature, feature.price_factor
 		price_factor *= feature.price_factor
-	print ("price factor", price_factor, basePrice * float(price_factor))
-	return basePrice * float(price_factor)
+	print ("price factor", price_factor, basePrice * float(price_factor) * nego_factor)
+	return basePrice * float(price_factor) * nego_factor
 
 
 # def getBike(request):

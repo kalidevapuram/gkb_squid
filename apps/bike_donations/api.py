@@ -1,5 +1,7 @@
 import requests
 import json
+import string
+import random
 
 class LightspeedApi(object):
 	auth = ('22dabb44da10a0d29347905309fd40dc5ad88bc3683927bb6be0d2142ba7c90b', 'apikey')
@@ -21,9 +23,14 @@ class LightspeedApi(object):
 		return True
 
 	def create_bike(self, description, price):
+		sku_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
+		sku = "GKBD"
+		for _ in range(8):
+			sku += random.choice(sku_chars)
 		url = 'https://api.merchantos.com/API/Account/132193/Item.json'
 		pythonDictionary = {}
 		pythonDictionary["description"] = description
+		pythonDictionary["customSku"] = sku
 		pythonDictionary['ItemShops'] = {}
 		pythonDictionary['ItemShops']['ItemShop'] = {}
 		pythonDictionary['ItemShops']['ItemShop']['qoh'] = 1
@@ -36,4 +43,4 @@ class LightspeedApi(object):
 		json_data = json.dumps(pythonDictionary)
 		response = requests.post(url, auth=self.auth, data=json_data)
 		print response.reason
-		return True
+		return pythonDictionary
