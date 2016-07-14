@@ -19,8 +19,12 @@
 #header img {
 	display: inline-block;
 	position: absolute;
+<<<<<<< HEAD
 	right: 0px;
 	padding-top: 0px;
+=======
+	right: 10px;
+>>>>>>> amy
 }
 
 #label {
@@ -40,9 +44,29 @@ table {
 	width: 100%;
 }
 .commit {
-	position: absolute;
+	padding-left: 20px;
 	right: 0px;
 }
+.notepad {
+	background-image: url("../resources/yellowpaper.jpeg");
+	background-repeat: no-repeat;
+	height: 500px;
+	padding-left: 2.2em;
+	position: fixed;
+	right: 10px;
+	/*word-wrap: break-word;*/
+}
+.notepad p {
+	padding: 0.25em;
+
+}
+.info{
+	color: maroon;
+}
+.features{
+	width: 275px;
+}
+
 th {
 	color: green;
 }

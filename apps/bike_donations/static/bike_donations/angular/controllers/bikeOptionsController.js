@@ -73,6 +73,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		};
 	}
 
+
 	$scope.selected = {};
 
 	$scope.$watch('selected.type',function(){
@@ -108,8 +109,12 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 			$scope.bike_info = bike;
 			bikeOptionsFactory.postBike(bike)
 		});
-		
+
 	};
+
+	$scope.goBack = function(){
+		console.log("going back");
+	}
 
 	$scope.confirm = function(){
 		console.log("going to confirm");
