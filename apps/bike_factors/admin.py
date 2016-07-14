@@ -7,9 +7,6 @@ from .models import *
 class FeaturesOptionAdmin(admin.ModelAdmin):
 	filter_horizontal = ['requisites']
 
-class WheelOptionAdmin(admin.ModelAdmin):
-	filter_horizontal = ['requisites']
-
 class BrandOptionAdmin(admin.ModelAdmin):
 	filter_horizontal = ['requisites']
 
@@ -21,7 +18,6 @@ class FrameOptionAdmin(admin.ModelAdmin):
 
 admin.site.register(BikeOption)
 admin.site.register(FeaturesOption, FeaturesOptionAdmin)
-admin.site.register(WheelOption, WheelOptionAdmin)
 admin.site.register(BrandOption, BrandOptionAdmin)
 admin.site.register(CosmeticOption, CosmeticOptionAdmin)
 admin.site.register(FrameOption, FrameOptionAdmin)

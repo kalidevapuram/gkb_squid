@@ -93,14 +93,14 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 				for (var wIndex = 0; wIndex < requiredArr.length; wIndex++){
 					mustHave = requiredArr[wIndex];
-					
+
 					if (this.data.bikeType[mustHave]['status'] == true){
-						
+
 						break;
 					}
 				};
 
-				
+
 				if (wIndex != requiredArr.length){
 					forScope[opt] = false;
 				}else{

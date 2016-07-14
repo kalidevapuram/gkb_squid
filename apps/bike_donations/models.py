@@ -7,7 +7,6 @@ from ..component_factors.models import *
 
 class Bike(models.Model):
 	bikeType = models.ForeignKey(BikeOption)
-	wheels = models.ForeignKey(WheelOption)
 	brand = models.ForeignKey(BrandOption)
 	cosmetic = models.ForeignKey(CosmeticOption)
 	frame = models.ForeignKey(FrameOption, null=True, blank=True)

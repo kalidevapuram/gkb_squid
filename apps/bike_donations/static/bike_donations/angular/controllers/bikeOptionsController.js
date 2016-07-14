@@ -1,6 +1,7 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
 
+
 	bikeOptionsFactory.selectionData(function(data){
 		for (var key in data){
 			$scope.bikeType[key] = data[key]['status']
@@ -21,7 +22,8 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 
 	function optionClicked(type, select, prep){
-		var selectArr = ["wheels","brand", "cosmetic", "frame", "features"];
+		var selectArr = ["brand", "cosmetic", "frame", "features"];
+
 		if (select && select != 'placed'){
 
 			if (type == "bikeType"){
@@ -54,7 +56,6 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 					var nObject = bikeOptionsFactory.assembleScope(selectArr[pIndex])
 
 					if (Object.keys(nObject).length != 0){
-						console.log("THIS SHOuLD BE PRINTING")
 						$scope[selectArr[pIndex]] = nObject;
 						break;
 					}else{
@@ -73,15 +74,12 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		};
 	}
 
+
 	$scope.selected = {};
 
 	$scope.$watch('selected.type',function(){
 		console.log('CHANGE')
-		optionClicked("bikeType",$scope.selected.type, "wheels")
-	});
-
-	$scope.$watch('selected.wheels',function(){
-		optionClicked("wheels",$scope.selected.wheels, "brand")
+		optionClicked("bikeType",$scope.selected.type, "brand")
 	});
 
 	$scope.$watch('selected.brand',function(){
@@ -98,26 +96,32 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	$scope.checkbox = function(item){
 		bikeOptionsFactory.valueSelect("features", item);
+		bikeOptionsFactory.assembleBike(function(bike){
+			$scope.assembled_bike=bike;
+		});
 	};
 
 	$scope.getBike = function(){
 
 		// event.preventDefault();
+		$scope.posted = true
 		bikeOptionsFactory.assembleBike(function(bike){
 			$scope.bike_info = bike;
 			bikeOptionsFactory.postBike(bike)
 		});
-		
+
 	};
 
 	$scope.goBack = function(){
 		$location.path('/')
+		console.log("going back");
 	}
 
 	$scope.confirm = function(){
 		console.log("going to confirm");
 		bikeOptionsFactory.assembleBike(function(bike){
 			$scope.assembled_bike=bike;
+			$scope.posted = false
 		});
 		$scope.checkBike = true;
 	}

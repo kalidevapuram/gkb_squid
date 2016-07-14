@@ -11,3 +11,4 @@ class componentForm(ModelForm):
 	class Meta:
 		model = Component
 		fields = ['saddleSelect', 'handleSelect', 'price']
+
