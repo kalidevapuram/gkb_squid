@@ -155,8 +155,12 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 			<p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-bind="selected.brand"></span></p>
 			<p><u>Cosmetics:</u><span ng-bind="selected.cosmetic"></span></p>
 			<p ng-if="frame"><u>Frame:</u><span ng-bind="selected.frame"></span></p>
-			<p ng-hide="selected.type == 'Kids 12inch wheels' " class="features"><u>Features:</u></br>
-				<span ng-bind="assembled_bike.features"></span>
+			<p ng-hide="selected.type == 'Kids 12inch wheels' " class="features"><u>Features:</u>
+				<!-- <span ng-bind="assembled_bike.features"></span> -->
+				<ol>
+					<li ng-repeat="feature in assembled_bike.features" ng-bind="feature">
+					</li>
+				</ol>
 			</p>
 			<form ng-if="selected.frame && features">{% csrf_token %}
 				<div class="commit">
@@ -164,9 +168,13 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 					<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Restart</button>
 				</div>
 			</form>
-			<div class="row text-center">
-				<p ng-if="posted">Please wait while your donation is being added to the inventory</p>
+			<div class="afterPosting" ng-if="posted">
+				<p>Please wait!</p>
+				<p>Adding to inventory!</p>
+				<img class="rider" src="{% static 'bike_donations/resources/riding.gif' %}" />
 			</div>
+
+
 		</div><!-- ends notepad-->
 	</div> <!-- ends main row-->
 </div> <!-- end of bikeOptionsController -->

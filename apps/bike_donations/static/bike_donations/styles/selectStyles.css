@@ -7,7 +7,7 @@
 
 #header{
 	border-bottom:.2em solid black;
-	
+
 
 }
 #header h2{
@@ -52,7 +52,7 @@ table {
 	/*word-wrap: break-word;*/
 }
 .notepad p {
-	padding: 0.25em;
+	padding: 0;
 
 }
 .info{
@@ -64,6 +64,10 @@ table {
 
 .commit {
 	padding-top: 0;
+}
+#labelBackBtn {
+	margin: 0 auto;
+	display: block;
 }
 
 th {
@@ -83,7 +87,15 @@ h4 {
 select {
 	width: 100%;
 }
-
+ol {
+	padding-left: 2.5em;
+}
+li {
+	padding: 0.1em;
+}
+.rider {
+	margin-right: 3.0em;
+}
 
 @media print {
 	*{
