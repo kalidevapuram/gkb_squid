@@ -1,5 +1,6 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
+	$scope.features = []
 
 
 	bikeOptionsFactory.selectionData(function(data){
@@ -51,14 +52,9 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 			if(prep){
 
 				var pIndex = selectArr.indexOf(prep)
-				console.log(pIndex)
 				while(pIndex < selectArr.length){
 					var nObject = bikeOptionsFactory.assembleScope(selectArr[pIndex])
-					console.log('found nObject of ' + selectArr[pIndex])
-					console.log(nObject)
-					console.log(Object.keys(nObject))
 					if (Object.keys(nObject).length != 0){
-						console.log("THIS SHOuLD BE PRINTING")
 						$scope[selectArr[pIndex]] = nObject;
 						break;
 					}else{
@@ -80,7 +76,6 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	$scope.selected = {};
 
 	$scope.$watch('selected.type',function(){
-		console.log('CHANGE')
 		optionClicked("bikeType",$scope.selected.type, "brand")
 	});
 
@@ -97,7 +92,12 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	});
 
 	$scope.checkbox = function(item){
+
 		bikeOptionsFactory.valueSelect("features", item);
+		bikeOptionsFactory.assembleBike(function(bike){
+			$scope.assembled_bike=bike;
+		});
+
 	};
 
 	$scope.getBike = function(){

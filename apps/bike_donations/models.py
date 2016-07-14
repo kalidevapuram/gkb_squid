@@ -7,7 +7,7 @@ from ..bike_factors.models import *
 
 class Bike(models.Model):
 	bikeType = models.ForeignKey(BikeOption)
-	brand = models.ForeignKey(BrandOption)
+	brand = models.ForeignKey(BrandOption, null=True, blank=True)
 	cosmetic = models.ForeignKey(CosmeticOption)
 	frame = models.ForeignKey(FrameOption, null=True, blank=True)
 	features = models.ManyToManyField(FeaturesOption, blank=True)

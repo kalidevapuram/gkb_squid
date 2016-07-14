@@ -27,7 +27,6 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 					}
 				}
 				factory.data.cosmetic = cos
-				console.log(factory.data)
 				callback(factory.data.bikeType)
 			});
 		}
@@ -141,7 +140,6 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 					};
 				}
 			}
-			console.log(bikeFinal)
 			callback(bikeFinal)
 		}
 

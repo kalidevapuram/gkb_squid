@@ -15,7 +15,6 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-<script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 <script type = "text/javascript" src = "https:ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
@@ -51,11 +50,11 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 <body>
 <div class="container">
 
-	<div id = "header">
-		<h2>Add To Inventory Demo</h2>
-		<img src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
+	<div id = "header" class="row">
+		<h2 class="col-xs-8">Add To Inventory Demo</h2>
+		<img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
 	</div>
-	<div ng-controller = "omniOptionsController" id="buttonBoxDiv">
+	<div ng-controller = "omniOptionsController" id="buttonBoxDiv" class="row">
 		<div id="buttonBox" class="row">
 
 				<button id = 'bike' ng-click = "buttonClicked('bike')" class="btn btn-success col-xs-4">Bike</button>
@@ -83,7 +82,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 
 						<div class = "selectBox row">
 							<div class="col-xs-5 col-xs-offset-3">
-								<select ng-model="selected.type" size="5">
+								<select ng-model="selected.type" size="10" class="form-control">
 									<option ng-repeat = "(key, value) in bikeType" >[[key]]</option>
 								</select>
 							</div>
@@ -166,7 +165,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 
 					<div class = "checkBoxBox row">
 						<div class="col-xs-5 col-xs-offset-3">
-							<span ng-repeat="(key, value) in features">
+							<span class="checkbox" ng-repeat="(key, value) in features">
 								<label>
 				    			<input type="checkbox" id="[[key]]" ng-click = "checkbox(key)"/>[[key]]<br>
 				    		</label><br><br>
