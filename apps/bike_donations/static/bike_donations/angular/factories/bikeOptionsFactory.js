@@ -8,7 +8,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 				factory.data = {};
 
                 for(var object in response){
-                	if (object != 'features') {
+                	if (object != 'cosmetics') {
                     	factory.data[object] = factory.letterBy(response[object])
                     } else {
                     	factory.data[object] = response[object];

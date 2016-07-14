@@ -155,14 +155,13 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 			<p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-bind="selected.brand"></span></p>
 			<p><u>Cosmetics:</u><span ng-bind="selected.cosmetic"></span></p>
 			<p ng-if="frame"><u>Frame:</u><span ng-bind="selected.frame"></span></p>
-			<p ng-hide="selected.type == 'Kids 12inch wheels' " class="features"><u>Features:</u>
+			<p ng-hide="selected.type == 'Kids 12inch wheels' " class="features"><u>Features:</u></br>
 				<span ng-bind="assembled_bike.features"></span>
-
 			</p>
 			<form ng-if="selected.frame && features">{% csrf_token %}
 				<div class="commit">
 					<button ng-click="getBike()" class="btn btn-success">All Done</button>
-					<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Go Back</button>
+					<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Restart</button>
 				</div>
 			</form>
 			<div class="row text-center">

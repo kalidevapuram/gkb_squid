@@ -113,7 +113,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	};
 
 	$scope.goBack = function(){
-		console.log("going back");
+		$window.location = "/"
 	}
 
 	$scope.confirm = function(){

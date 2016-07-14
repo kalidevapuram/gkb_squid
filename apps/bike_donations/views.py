@@ -24,6 +24,8 @@ def form_data(request):
 		'frame' : serialize_selections(FrameOption.objects.all()),
 		'features' : serialize_selections(FeaturesOption.objects.all())
 	}
+	print FeaturesOption.objects.all()
+	# print context['features']
 	return JsonResponse(context)
 
 
