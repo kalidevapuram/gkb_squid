@@ -110,6 +110,10 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		
 	};
 
+	$scope.goBack = function(){
+		$location.path('/')
+	}
+
 	$scope.confirm = function(){
 		console.log("going to confirm");
 		bikeOptionsFactory.assembleBike(function(bike){

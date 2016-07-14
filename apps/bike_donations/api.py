@@ -22,7 +22,9 @@ class LightspeedApi(object):
 		print response.reason
 		return True
 
-	def create_bike(self, description, price):
+
+
+	def create_item(self, description, price):
 		sku_chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
 		sku = "GKBD"
 		for _ in range(8):

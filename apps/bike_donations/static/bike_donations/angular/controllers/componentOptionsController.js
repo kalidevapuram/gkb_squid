@@ -23,4 +23,18 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 
 		$scope.selected.obj = $scope[$scope.selected.which];
 	});
+
+	$scope.postComponent = function(){
+		info = {
+			'type': $scope.selected.which,
+			'item': $scope.selected.item
+		}		
+
+		componentOptionsFactory.sendComponentToServer(info, function(response){
+			if (response.success){
+				$window.location = "/print/"
+			}
+		});
+
+	}
 });

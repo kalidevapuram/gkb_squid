@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption, WheelOption
-from .models import Bike
+from .models import Bike, Component
 from ..component_factors.models import HandlebarOption, SaddleOption
 import requests
 import json
 import string
 import random
 from .api import LightspeedApi
-from .forms import BikeForm
+from .forms import BikeForm, componentForm 
 # from django.views.generic.base import TemplateView
 
 
@@ -103,7 +103,7 @@ def sample_post(request):
 	lightspeed = LightspeedApi()
 
 	#returns pythonDictionary
-	newBicycle = lightspeed.create_bike(descriptionString, bikePrice)
+	newBicycle = lightspeed.create_item(descriptionString, bikePrice)
 
 	# session for label template
 	request.session['customSku'] = newBicycle['customSku']
@@ -111,6 +111,63 @@ def sample_post(request):
 	request.session['bikeType'] = bikeoption.option
 	request.session['price'] = bikePrice
 	return JsonResponse({'success' : True})
+
+def component_post(request):
+	parsed_json = json.loads(request.body)
+	optionsArray = []
+
+	descriptionString = ""
+	componentType = ""
+
+	saddleSelect = None
+	handleSelect = None 
+
+	print 'made it to component post'
+	if 'saddle' in parsed_json:
+		saddleSelect = SaddleOption.objects.get(option=parsed_json['saddle'])
+		print 'about to print saddleSelect'
+		print saddleSelect
+		optionsArray.append(saddleSelect)
+
+		parsed_json['saddle'] = saddleSelect.id
+		parsed_json['handlebar'] = None
+
+		descriptionString = str(saddleSelect.option + " saddle")
+		componentType = 'Saddle'
+
+	elif 'handlebar' in parsed_json:
+		handleSelect = HandlebarOption.objects.get(option=parsed_json['handlebar'])
+		optionsArray.append(handleSelect)
+
+		parsed_json['handlebar'] = handleSelect.id
+		parsed_json['saddle'] = None
+
+		descriptionString = str(handleSelect.option + " handlebar")
+		componentType = 'Handlebar'
+
+	form = componentForm(parsed_json)
+
+	if form.is_valid():
+		print ('we are valid')
+	else:
+		print ("Not valid", form.errors.as_json())
+
+	lightspeed = LightspeedApi()
+
+	#returns pythonDictionary
+	newComponent= lightspeed.create_item(descriptionString, parsed_json['price'])
+
+	# session for label template
+	request.session['customSku'] = newComponent['customSku']
+	if saddleSelect != None:
+		request.session['brand'] = saddleSelect.option
+	elif handleSelect != None:
+		request.session['brand'] = handleSelect.option
+
+	request.session['price'] = parsed_json['price']
+	request.session['componentType'] = componentType
+	return JsonResponse({'success' : True})
+
 
 def getBikePrice(optionsArray, featuresoption):
 	basePrice = 200.00
@@ -129,9 +186,14 @@ def print_label(request):
 	label = {
 		'customSku' : request.session['customSku'],
 		'brand' : request.session['brand'],
-		'bikeType' : request.session['bikeType'],
 		'price' : request.session['price']
 	}
+
+	if 'bikeType' in request.session:
+		label['type'] = request.session['bikeType']
+	elif 'componentType' in request.session:
+		label['type'] = request.session['componentType']
+
 	return render(request, 'bike_donations/barcode.html', label)
 
 def component_data(request):

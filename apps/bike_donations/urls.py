@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^inventory/$', views.get_inv),
     url(r'^componentForm/$', views.component_data),
     url(r'^samplePost/$', views.sample_post),
+    url(r'^componentPost/$', views.component_post),
     url(r'^print/$', views.print_label),
 ]
