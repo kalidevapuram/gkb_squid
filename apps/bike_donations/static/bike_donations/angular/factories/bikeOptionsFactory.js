@@ -8,7 +8,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 				factory.data = {};
 
                 for(var object in response){
-                	if (object != 'features') {
+                	if (object != 'cosmetics') {
                     	factory.data[object] = factory.letterBy(response[object])
                     } else {
                     	factory.data[object] = response[object];
@@ -66,14 +66,14 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 				for (var wIndex = 0; wIndex < requiredArr.length; wIndex++){
 					mustHave = requiredArr[wIndex];
-					
+
 					if (this.data.bikeType[mustHave]['status'] == true){
-						
+
 						break;
 					}
 				};
 
-				
+
 				if (wIndex != requiredArr.length){
 					forScope[opt] = false;
 				}else{
