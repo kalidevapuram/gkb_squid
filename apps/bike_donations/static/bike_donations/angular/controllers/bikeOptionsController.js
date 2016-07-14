@@ -58,7 +58,6 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 					console.log(nObject)
 					console.log(Object.keys(nObject))
 					if (Object.keys(nObject).length != 0){
-						console.log("THIS SHOuLD BE PRINTING")
 						$scope[selectArr[pIndex]] = nObject;
 						break;
 					}else{
@@ -76,6 +75,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 			}
 		};
 	}
+
 
 	$scope.selected = {};
 
@@ -98,6 +98,9 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 	$scope.checkbox = function(item){
 		bikeOptionsFactory.valueSelect("features", item);
+		bikeOptionsFactory.assembleBike(function(bike){
+			$scope.assembled_bike=bike;
+		});
 	};
 
 	$scope.getBike = function(){
