@@ -96,7 +96,9 @@ li {
 .rider {
 	margin-right: 3.0em;
 }
-
+.blue {
+	color: blue;
+}
 @media print {
 	*{
 		/*size: 2.0in 2.0in;*/

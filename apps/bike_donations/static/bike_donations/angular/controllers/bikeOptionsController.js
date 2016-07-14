@@ -1,6 +1,7 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
-	$scope.features = []
+	$scope.features = [];
+	$scope.assembled_bike = {};
 
 
 	bikeOptionsFactory.selectionData(function(data){
@@ -28,7 +29,8 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 			if (type == "bikeType"){
 				var selectionBool;
-
+				bikeOptionsFactory.clearHouse();
+				$scope.assembled_bike = {};
 				for (var idx = 0; idx < selectArr.length; idx++){
 					selectionBool = selectArr[idx]
 					if ($scope.selected[selectionBool]){
@@ -71,6 +73,11 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 				setTimeout(change, 20)
 			}
 		};
+	}
+
+	$scope.editJump = function(elmID){
+		console.log("passed ID", elmID)
+		scrollService.scrollTo(elmID);
 	}
 
 

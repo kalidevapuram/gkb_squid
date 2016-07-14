@@ -1,6 +1,7 @@
 angular.module('bikeSelect').service('scrollService', function(){
-    
+
     this.scrollTo = function(eID) {
+        console.log("Element ID", eID);
         var startY = currentYPosition();
         var stopY = elmYPosition(eID);
         var distance = stopY > startY ? stopY - startY : startY - stopY;
@@ -22,7 +23,7 @@ angular.module('bikeSelect').service('scrollService', function(){
             setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
             leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
         }
-        
+
         function currentYPosition() {
             // Firefox, Chrome, Opera, Safari
             if (self.pageYOffset) return self.pageYOffset;
@@ -33,7 +34,7 @@ angular.module('bikeSelect').service('scrollService', function(){
             if (document.body.scrollTop) return document.body.scrollTop;
             return 0;
         }
-        
+
         function elmYPosition(eID) {
             var elm = document.getElementById(eID);
             var y = elm.offsetTop;
@@ -45,6 +46,5 @@ angular.module('bikeSelect').service('scrollService', function(){
         }
 
     };
-    
+
 });
-    

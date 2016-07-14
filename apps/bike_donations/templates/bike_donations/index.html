@@ -71,7 +71,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 				<form>
 					{% csrf_token %}
 					<div ng-if = "bikeOption && !productOption.status">
-						<div id = "bike">
+						<div id = "bikeType">
 
 								<div class="row">
 									<div class="col-xs-12">
@@ -151,14 +151,14 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 		</div> <!-- end of #optionsBox -->
 		<div class="col-xs-4 notepad">
 			<h4 class="info">Bike Information</h4>
-			<p><u>Model:</u><span ng-bind="selected.type"></span></p>
-			<p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-bind="selected.brand"></span></p>
-			<p><u>Cosmetics:</u><span ng-bind="selected.cosmetic"></span></p>
-			<p ng-if="frame"><u>Frame:</u><span ng-bind="selected.frame"></span></p>
+			<p><u>Model:</u><span ng-if="selected.type" ng-bind="selected.type" ng-click="editJump('bikeType')" class="blue"></span></p>
+			<p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-if="selected.brand" ng-bind="selected.brand" ng-click="editJump('brand')" class="blue"></span></p>
+			<p><u>Cosmetics:</u><span ng-if="selected.cosmetic" ng-bind="selected.cosmetic" ng-click="editJump('cosmetic')" class="blue"></span></p>
+			<p ng-if="frame"><u>Frame:</u><span ng-if="selected.frame" ng-bind="selected.frame" ng-click="editJump('frame')" class="blue"></span></p>
 			<p ng-hide="selected.type == 'Kids 12inch wheels' " class="features"><u>Features:</u>
 				<!-- <span ng-bind="assembled_bike.features"></span> -->
-				<ol>
-					<li ng-repeat="feature in assembled_bike.features" ng-bind="feature">
+				<ol ng-click="editJump('features')" ng-if="assembled_bike.features">
+					<li ng-repeat="feature in assembled_bike.features" ng-bind="feature" class="blue">
 					</li>
 				</ol>
 			</p>
