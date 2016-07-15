@@ -1,13 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-<<<<<<< HEAD
-from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption, WheelOption
 from .models import Bike, Component
 from ..component_factors.models import HandlebarOption, SaddleOption
-=======
 from ..bike_factors.models import BikeOption, BrandOption, CosmeticOption, FeaturesOption, FrameOption
-from .models import Bike
->>>>>>> 161a88625469cc3681144aa688df8cce7d0f8f5c
 import requests
 import json
 import string

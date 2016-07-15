@@ -45,17 +45,18 @@
 		<h2>Add To Inventory Demo</h2>
 		<img src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
 	</div>
-	<div id = "mainBody">
+	<div id = "outerMain">
 
-	<div ng-controller = "omniOptionsController" id="buttonBoxDiv">
-		<div id="buttonBox" class="row">
-			<button id = 'bike' ng-click = "buttonClicked('bike')" class="btn btn-success col-xs-4">Bike</button>
-			<button id = 'component' ng-click = "buttonClicked('component')" class="btn btn-warning col-xs-4">Component</button>
-			<button id = 'other' ng-click = "buttonClicked('other')" class="btn btn-danger  col-xs-4">Other</button>
+		<div ng-controller = "omniOptionsController" id="buttonBoxDiv">
+			<div id="buttonBox" class="row">
+				<button id = 'bike' ng-click = "buttonClicked('bike')" class="btn btn-success col-xs-4">Bike</button>
+				<button id = 'component' ng-click = "buttonClicked('component')" class="btn btn-warning col-xs-4">Component</button>
+				<button id = 'other' ng-click = "buttonClicked('other')" class="btn btn-danger  col-xs-4">Other</button>
+			</div>
+			<form>{% csrf_token %}
+				<div ng-view=""></div>
+			</form>
 		</div>
-		<form>{% csrf_token %}
-			<div ng-view=""></div>
-		</form>
 	</div>
 </div>
 

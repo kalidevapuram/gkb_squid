@@ -8,8 +8,11 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 
 			for (var iOne = 0; iOne < letteredArr.length - 1; iOne++){
 				var min = iOne;
+				if (letteredArr[iOne] == 'features'){
+					console.log("WE HAVE FEATURES FEATURES")
+				}
 				for (var iTwo = iOne+1; iTwo < letteredArr.length; iTwo++){
-					if (letteredArr[iTwo]<letteredArr[min]){
+					if (letteredArr[iTwo][0] <letteredArr[min][0]){
 						min = iTwo;
 					}
 				};
@@ -23,7 +26,9 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 			var finalObj = {};
 			for (var x = 0; x < letteredArr.length; x++){
 				var key = letteredArr[x]
-				finalObj[key] = passObject[key]
+				if (key != 'status'){
+					finalObj[key] = passObject[key];
+				}
 			};
 
 			return finalObj
@@ -34,7 +39,7 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 				factory.data = {};
 
                 for(var object in response){
-                	if (object != 'features') {
+                	if (object != 'cosmetic') {
                     	factory.data[object] = factory.letterBy(response[object])
                     } else {
                     	factory.data[object] = response[object];
@@ -83,31 +88,46 @@ angular.module('bikeSelect').factory('bikeOptionsFactory', function($http, $wind
 		    return finalObj
 		}
 
+		factory.clearHouse = function(){
+			for (var obj in this['data']){
+				if (obj != 'bikeType'){
+					for (var item in this['data'][obj]){
+						this['data'][obj]['status'] = false;
+					}
+				}
+			}
+		}
+
 		factory.assembleScope = function(select){
 			var forScope = {};
+			console.log(select)
+			console.log(this['data'][select])
 
 			for (var opt in this['data'][select]){
 
-				var requiredArr = this.data[select][opt]['requisites']
-				var mustHave;
+				if (opt != 'status'){
+					var requiredArr = this['data'][select][opt]['requisites']
+					var mustHave;
 
-				for (var wIndex = 0; wIndex < requiredArr.length; wIndex++){
-					mustHave = requiredArr[wIndex];
+					for (var wIndex = 0; wIndex < requiredArr.length; wIndex++){
+						mustHave = requiredArr[wIndex];
 
-					if (this.data.bikeType[mustHave]['status'] == true){
+						if (this.data.bikeType[mustHave]['status'] == true){
 
-						break;
+							break;
+						}
+					};
+
+
+					if (wIndex != requiredArr.length){
+						forScope[opt] = false;
+					}else{
+						console.log("WE FINALLY FAIL PRINT");
 					}
-				};
-
-
-				if (wIndex != requiredArr.length){
-					forScope[opt] = false;
-				}else{
-					console.log("WE FINALLY FAIL PRINT");
 				}
 			};
 
+			console.log(forScope)
 			return forScope;
 		}
 

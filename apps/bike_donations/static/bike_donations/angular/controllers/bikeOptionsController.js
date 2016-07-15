@@ -1,5 +1,6 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
+	$scope.assembled_bike = {};
 
 
 	bikeOptionsFactory.selectionData(function(data){
@@ -28,7 +29,8 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 			if (type == "bikeType"){
 				var selectionBool;
-
+				bikeOptionsFactory.clearHouse();
+				assembled_bike = {};
 				for (var idx = 0; idx < selectArr.length; idx++){
 					selectionBool = selectArr[idx]
 					if ($scope.selected[selectionBool]){
@@ -53,12 +55,17 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 
 				var pIndex = selectArr.indexOf(prep)
 				while(pIndex < selectArr.length){
+					
 					var nObject = bikeOptionsFactory.assembleScope(selectArr[pIndex])
 
-					if (Object.keys(nObject).length != 0){
+					if (Object.keys(nObject).length != 0 && Object.keys(nObject)[0] != "Other"){
 						$scope[selectArr[pIndex]] = nObject;
 						break;
 					}else{
+						console.log('let\'s do next')
+						if (Object.keys(nObject)[0] == "Other"){
+							bikeOptionsFactory.data.brand.Other.status = true;
+						}
 						$scope.selected[selectArr[pIndex]] = "placed"
 					}
 

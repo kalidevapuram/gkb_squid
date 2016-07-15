@@ -1,5 +1,6 @@
 angular.module('bikeSelect').controller('componentOptionsController', function($scope, $location, $window, componentOptionsFactory, scrollService, boolService){
 	$scope.which = [];
+	$scope.bikeOptions
 	componentOptionsFactory.getAllComponents(function(response){
 		console.log('init response')
 		console.log(response)
@@ -20,6 +21,14 @@ angular.module('bikeSelect').controller('componentOptionsController', function($
 
 	$scope.$watch('selected.which',function(){
 		console.log('change')
+		var change = function(){
+			scrollService.scrollTo('itemSelect')
+		}
+
+		if ($scope.selected.which){
+			$scope.trim = $scope.selected.which.substring(0,$scope.selected.which.length - 1)
+			setTimeout(change, 20)
+		}
 
 		$scope.selected.obj = $scope[$scope.selected.which];
 	});
