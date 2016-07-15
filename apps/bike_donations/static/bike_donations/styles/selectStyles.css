@@ -66,7 +66,7 @@ table {
 	padding-top: 0;
 }
 #labelBackBtn {
-	margin: 0 auto;
+	margin: 3em auto;
 	display: block;
 }
 
@@ -111,7 +111,7 @@ li {
 		height: 56mm;
 		width: 56mm;
 	}
-	#header, #buttonBoxDiv, #optionsBox, button {
+	#header, #buttonBoxDiv, #optionsBox, .btn, #labelBackBtn {
 		display: none;
 	}
 	#label {
