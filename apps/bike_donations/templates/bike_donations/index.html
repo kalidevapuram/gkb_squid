@@ -18,7 +18,7 @@
 <script type = "text/javascript" src = "https:ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale-1, maximum-scale=1, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
 
 
@@ -150,7 +150,7 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 				</div><!--closes ng-if bikeOption-->
 			</form>
 		</div> <!-- end of #optionsBox -->
-		<div class="col-xs-4 notepad">
+		<div class="col-xs-4 notepad pull-right" id="notetaking">
 			<h4 class="info">Bike Information</h4>
 			<p><u>Model:</u><span ng-if="selected.type" ng-bind="selected.type" ng-click="editJump('bikeType')" class="blue"></span></p>
 			<p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-if="selected.brand" ng-bind="selected.brand" ng-click="editJump('brand')" class="blue"></span></p>
@@ -180,7 +180,18 @@ angular.module('bikeSelect', ['ngCookies','ngRoute'])
 	</div> <!-- ends main row-->
 </div> <!-- end of bikeOptionsController -->
 </div><!-- closes container-->
-
+<script>
+	$(document).ready(function(){
+		var elementPosition = $('#notetaking').offset();
+		$(window).scroll(function(){
+			if($(window).scrollTop() > elementPosition.top){
+				$('#notetaking').css('position', 'fixed').css({'bottom': '20px', 'right': '20px'});
+			} else {
+				$('#notetaking').css('position', 'static');
+			}
+		});
+	})
+</script>
 </body>
 
 
