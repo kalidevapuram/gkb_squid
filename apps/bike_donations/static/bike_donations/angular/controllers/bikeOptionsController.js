@@ -26,7 +26,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	function optionClicked(type, select, prep){
 		var selectArr = ["brand", "cosmetic", "frame", "features"];
 
-		if (select){
+		if (select && select !="placed"){
 
 			if (type == "bikeType"){
 				var selectionBool;
@@ -34,9 +34,8 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 				$scope.assembled_bike = {};
 				for (var idx = 0; idx < selectArr.length; idx++){
 					selectionBool = selectArr[idx]
-					if ($scope.selected[selectionBool]){
-						$scope.selected[selectionBool] = "";
-					};
+					$scope.selected[selectionBool] = "";
+					$scope[selectionBool] = ""
 				};
 			}
 
@@ -58,7 +57,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 				while(pIndex < selectArr.length){
 					
 					var nObject = bikeOptionsFactory.assembleScope(selectArr[pIndex])
-					if (Object.keys(nObject).length != 0 && Object.keys(nObject)[0] != "Other"){
+					if (Object.keys(nObject).length != 0){
 						$scope[selectArr[pIndex]] = nObject;
 						break;
 					}else{
@@ -66,7 +65,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 						if (Object.keys(nObject)[0] == "Other"){
 							bikeOptionsFactory.data.brand.Other.status = true;
 						}
-						$scope.selected[selectArr[pIndex]] = ""
+						$scope.selected[selectArr[pIndex]] = "placed"
 					}
 
 					pIndex++
