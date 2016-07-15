@@ -1,5 +1,6 @@
 angular.module('bikeSelect').controller('bikeOptionsController', function($scope, $location, $window, bikeOptionsFactory, scrollService, boolService){
 	$scope.bikeType = {};
+	$scope.features = [];
 	$scope.assembled_bike = {};
 
 
@@ -25,12 +26,12 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	function optionClicked(type, select, prep){
 		var selectArr = ["brand", "cosmetic", "frame", "features"];
 
-		if (select && select != 'placed'){
+		if (select){
 
 			if (type == "bikeType"){
 				var selectionBool;
 				bikeOptionsFactory.clearHouse();
-				assembled_bike = {};
+				$scope.assembled_bike = {};
 				for (var idx = 0; idx < selectArr.length; idx++){
 					selectionBool = selectArr[idx]
 					if ($scope.selected[selectionBool]){
@@ -57,7 +58,6 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 				while(pIndex < selectArr.length){
 					
 					var nObject = bikeOptionsFactory.assembleScope(selectArr[pIndex])
-
 					if (Object.keys(nObject).length != 0 && Object.keys(nObject)[0] != "Other"){
 						$scope[selectArr[pIndex]] = nObject;
 						break;
@@ -66,7 +66,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 						if (Object.keys(nObject)[0] == "Other"){
 							bikeOptionsFactory.data.brand.Other.status = true;
 						}
-						$scope.selected[selectArr[pIndex]] = "placed"
+						$scope.selected[selectArr[pIndex]] = ""
 					}
 
 					pIndex++
@@ -81,11 +81,15 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 		};
 	}
 
+	$scope.editJump = function(elmID){
+		console.log("passed ID", elmID)
+		scrollService.scrollTo(elmID);
+	}
+
 
 	$scope.selected = {};
 
 	$scope.$watch('selected.type',function(){
-		console.log('CHANGE')
 		optionClicked("bikeType",$scope.selected.type, "brand")
 	});
 
@@ -102,10 +106,12 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	});
 
 	$scope.checkbox = function(item){
+
 		bikeOptionsFactory.valueSelect("features", item);
 		bikeOptionsFactory.assembleBike(function(bike){
 			$scope.assembled_bike=bike;
 		});
+
 	};
 
 	$scope.getBike = function(){
@@ -120,8 +126,7 @@ angular.module('bikeSelect').controller('bikeOptionsController', function($scope
 	};
 
 	$scope.goBack = function(){
-		$location.path('/')
-		console.log("going back");
+		$window.location = "/"
 	}
 
 	$scope.confirm = function(){

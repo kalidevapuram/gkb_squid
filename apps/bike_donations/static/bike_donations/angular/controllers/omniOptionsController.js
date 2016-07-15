@@ -34,7 +34,6 @@ angular.module('bikeSelect').controller('omniOptionsController',function($scope,
 	};
 
 	$scope.create_category = function(){
-		console.log("SCOPING FOR CAT NAME");
 		bikeOptionsFactory.create_category();
 	}
 

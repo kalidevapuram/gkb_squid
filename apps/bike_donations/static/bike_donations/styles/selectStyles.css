@@ -1,11 +1,12 @@
 *{
-	padding:1em;
+	padding:0.75em;
 	margin:0;
 	font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+
 }
 
 #outerMain{
-	margin-top: 5em;
+	margin-top: 5.1em;
 }
 #header{
 	border-bottom:.2em solid rgb(0, 168, 80);
@@ -13,7 +14,7 @@
 	width: 100%;
 	top:0;
 	display:block;
-	height:8em;
+	height: 8em;
 	background: rgba(255,255,255 ,.9);
 	z-index:1;
 }
@@ -27,7 +28,26 @@
 #header img {
 	display: inline-block;
 	position: absolute;
-	right: 100px;
+	right: 80px;
+	top: 0px;
+}
+
+#header-inv-page{
+	border-bottom:.2em solid rgb(0, 168, 80);
+	margin-top: -30px;
+}
+#header-inv-page h2{
+	/*display: inline-block;*/
+	color: rgb(0, 168, 80);
+	vertical-align: bottom;
+	margin-top: 70px;
+
+}
+#header-inv-page img {
+	/*display: inline-block;*/
+	/*position: absolute;*/
+	/*right: 0%;*/
+	/*top: 10px;*/
 }
 
 #label {
@@ -38,7 +58,7 @@
 }
 
 
-#cost, #info {
+#cost, .bike-info {
 	/*font-size: 100%;*/
 	margin: 0px;
 	padding: 0px;
@@ -57,10 +77,11 @@ table {
 	padding-left: 2.2em;
 	position: fixed;
 	right: 10px;
+	overflow-y: scroll;
 	/*word-wrap: break-word;*/
 }
 .notepad p {
-	padding: 0.25em;
+	padding: 0;
 
 }
 .info{
@@ -68,6 +89,14 @@ table {
 }
 .features{
 	width: 275px;
+}
+
+.commit {
+	padding-top: 0;
+}
+#labelBackBtn {
+	margin: 3em auto;
+	display: block;
 }
 
 th {
@@ -87,8 +116,18 @@ h4 {
 select {
 	width: 100%;
 }
-
-
+ol {
+	padding-left: 2.5em;
+}
+li {
+	padding: 0.1em;
+}
+.rider {
+	margin-right: 3.0em;
+}
+.blue {
+	color: blue;
+}
 @media print {
 	*{
 		/*size: 2.0in 2.0in;*/
@@ -101,7 +140,7 @@ select {
 		height: 56mm;
 		width: 56mm;
 	}
-	#header, #buttonBoxDiv, #optionsBox, button {
+	#header, #buttonBoxDiv, #optionsBox, .btn, #labelBackBtn {
 		display: none;
 	}
 	#label {
@@ -115,7 +154,7 @@ select {
 		/*margin-left: -20px;*/
 		/*padding: 0px;*/
 	}
-	#cost, #info {
+	#cost, .bike-info {
 		/*font-size: 100%;*/
 		/*margin: 0px;
 		padding: 0px;*/

@@ -20,6 +20,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'bike_donations/styles/selectStyles.css' %}">
 <script type = "text/javascript" src = "{% static 'bike_donations/angular/app.js' %}"></script>
 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+
 
 
 <!--Angular Below-->
@@ -41,17 +44,19 @@
 <body>
 <div class="container">
 
-	<div id = "header">
-		<h2>Add To Inventory Demo</h2>
-		<img src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
+	<div id = "header" class="row">
+		<h2 class="col-xs-8">Add To Inventory Demo</h2>
+		<img class="img-responsive" src="{% static 'bike_donations/resources/logoThing.jpg' %}" />
 	</div>
 	<div id = "outerMain">
-
+	<div ng-controller = "omniOptionsController" id="buttonBoxDiv" class="row">
+		<div id="buttonBox" class="row">
 		<div ng-controller = "omniOptionsController" id="buttonBoxDiv">
 			<div id="buttonBox" class="row">
 				<button id = 'bike' ng-click = "buttonClicked('bike')" class="btn btn-success col-xs-4">Bike</button>
 				<button id = 'component' ng-click = "buttonClicked('component')" class="btn btn-warning col-xs-4">Component</button>
-				<button id = 'other' ng-click = "buttonClicked('other')" class="btn btn-danger  col-xs-4">Other</button>
+				<a href="/find" id = 'other' class="btn btn-danger col-xs-4">Find a Donation</a>
+				<!-- <button id = 'other' ng-click = "buttonClicked('other')" class="btn btn-danger  col-xs-4">Other</button> -->
 			</div>
 			<form>{% csrf_token %}
 				<div ng-view=""></div>
@@ -341,8 +346,7 @@
 				<form>
 					{% csrf_token %}
 					<div ng-if = "bikeOption && !productOption.status">
-
-						<div id = "bike">
+						<div id = "bikeType">
 
 								<div class="row">
 									<div class="col-xs-12">
@@ -420,30 +424,40 @@
 				</div>closes ng-if bikeOption-->
 <!--
 			</form>
+<<<<<<< HEAD
 		</div> end of #optionsBox 
 		<div class="col-xs-4 notepad">
+=======
+		</div> <!-- end of #optionsBox -->
+		<!-- <div class="col-xs-4 notepad pull-right" id="notetaking">
 			<h4 class="info">Bike Information</h4>
-			<p><u>Model:</u><span ng-bind="selected.type"></span></p>
-			<p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-bind="selected.brand"></span></p>
-			<p><u>Cosmetics:</u><span ng-bind="selected.cosmetic"></span></p>
-			<p ng-if="frame"><u>Frame:</u><span ng-bind="selected.frame"></span></p>
+			<p><u>Model:</u><span ng-if="selected.type" ng-bind="selected.type" ng-click="editJump('bikeType')" class="blue"></span></p>
+			<p ng-hide="selected.type == 'Kids 12inch wheels' "><u>Brand:</u><span ng-if="selected.brand" ng-bind="selected.brand" ng-click="editJump('brand')" class="blue"></span></p>
+			<p><u>Cosmetics:</u><span ng-if="selected.cosmetic" ng-bind="selected.cosmetic" ng-click="editJump('cosmetic')" class="blue"></span></p>
+			<p ng-if="frame"><u>Frame:</u><span ng-if="selected.frame" ng-bind="selected.frame" ng-click="editJump('frame')" class="blue"></span></p>
 			<p ng-hide="selected.type == 'Kids 12inch wheels' " class="features"><u>Features:</u>
-				<span ng-bind="assembled_bike.features"></span>
-
+				<span ng-bind="assembled_bike.features"></span> COMMENT THIS LINE OUT
+				<ol ng-click="editJump('features')" ng-if="assembled_bike.features">
+					<li ng-repeat="feature in assembled_bike.features" ng-bind="feature" class="blue">
+					</li>
+				</ol>
 			</p>
 			<form ng-if="selected.frame && features">{% csrf_token %}
 				<div class="commit">
 					<button ng-click="getBike()" class="btn btn-success">All Done</button>
-					<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Go Back</button>
+					<button ng-click="goBack()" ng-if="!posted" class="btn btn-danger">Restart</button>
 				</div>
 			</form>
-			<div class="row text-center">
-				<p ng-if="posted">Please wait while your donation is being added to the inventory</p>
+			<div class="afterPosting" ng-if="posted">
+				<p>Please wait!</p>
+				<p>Adding to inventory!</p>
+				<img class="rider" src="{% static 'bike_donations/resources/riding.gif' %}" />
 			</div>
-		</div> ends notepad
-	</div>  ends main row
-</div>  end of bikeOptionsController 
-</div>closes container-->
+
+		</div> --><!-- ends notepad-->
+	</div> <!-- ends main row-->
+</div> <!-- end of bikeOptionsController -->
+</div><!-- closes container-->
 
 </body>
 </html>

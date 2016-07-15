@@ -25,6 +25,8 @@ def form_data(request):
 		'frame' : serialize_selections(FrameOption.objects.all()),
 		'features' : serialize_selections(FeaturesOption.objects.all())
 	}
+	print FeaturesOption.objects.all()
+	# print context['features']
 	return JsonResponse(context)
 
 
@@ -66,8 +68,14 @@ def sample_post(request):
 	bikeoption = BikeOption.objects.get(option=parsed_json["bikeType"])
 	optionsArray.append(bikeoption)
 
-	brandoption = BrandOption.objects.get(option=parsed_json["brand"])
-	optionsArray.append(brandoption)
+	if 'brand' in parsed_json:
+		brandoption = BrandOption.objects.get(option=parsed_json["brand"])
+		optionsArray.append(brandoption)
+		parsed_json["brand"]=brandoption.id
+		request.session['brand'] = brandoption.option
+	else:
+		parsed_json['brand'] = None
+		request.session['brand'] = ""
 
 	cosmeticoption = CosmeticOption.objects.get(option=parsed_json["cosmetic"])
 	optionsArray.append(cosmeticoption)
@@ -79,11 +87,11 @@ def sample_post(request):
 		frameoption = FrameOption.objects.get(option=parsed_json["frame"])
 		optionsArray.append(frameoption)
 		parsed_json["frame"]=frameoption.id
+
 	else:
 		parsed_json['frame'] = None
 
 	parsed_json["features"]=[obj.id for obj in featuresoption]
-	parsed_json["brand"]=brandoption.id
 	parsed_json["cosmetic"]=cosmeticoption.id
 	parsed_json["bikeType"] = bikeoption.id
 	form = BikeForm(parsed_json)
@@ -93,7 +101,7 @@ def sample_post(request):
 		parsed_json["djangoPrice"] = getBikePrice(optionsArray, featuresoption)
 	else:
 		print ("Not valid", form.errors.as_json())
-	descriptionString = str(bikeoption.option + " " + brandoption.option + " " + cosmeticoption.option)
+	descriptionString = str(bikeoption.option + " " + request.session['brand'] + " " + cosmeticoption.option)
 	bikePrice = parsed_json['djangoPrice']
 	lightspeed = LightspeedApi()
 
@@ -102,8 +110,8 @@ def sample_post(request):
 
 	# session for label template
 	request.session['customSku'] = newBicycle['customSku']
-	request.session['brand'] = brandoption.option
-	request.session['bikeType'] = bikeoption.option
+	
+	request.session['type'] = bikeoption.option
 	request.session['price'] = bikePrice
 	return JsonResponse({'success' : True})
 
@@ -156,7 +164,7 @@ def component_post(request):
 			request.session['brand'] = handleSelect.option
 
 		request.session['price'] = parsed_json['price']
-		request.session['componentType'] = componentType
+		request.session['type'] = None
 		return JsonResponse({'success' : True})
 
 	else:
@@ -190,13 +198,11 @@ def print_label(request):
 	label = {
 		'customSku' : request.session['customSku'],
 		'brand' : request.session['brand'],
-		'price' : request.session['price']
+		'price' : request.session['price'],
 	}
 
-	if 'bikeType' in request.session:
-		label['type'] = request.session['bikeType']
-	elif 'componentType' in request.session:
-		label['type'] = request.session['componentType']
+	if request.session['type'] is not None:
+		label['type'] = request.session['type']
 
 	return render(request, 'bike_donations/barcode.html', label)
 
