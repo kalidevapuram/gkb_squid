@@ -21,5 +21,5 @@ urlpatterns = [
 	url(r'^', include('apps.bike_donations.urls')),
 	url(r'^find/', include('apps.get_inventory.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^static/(?P.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    url(r'^static/', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 ]
