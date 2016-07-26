@@ -128,8 +128,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
-bike_donation_static = os.path.join(PROJECT_ROOT, '../bike_donations')
-get_inventory_static = os.path.join(PROJECT_ROOT, '../get_inventory')
+bike_donation_static = os.path.join(PROJECT_ROOT, '../gkb_squid/apps/bike_donations')
+get_inventory_static = os.path.join(PROJECT_ROOT, '../gkb_squid/apps/get_inventory')
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, "staticfiles/")
 STATIC_URL = '/static/'
